@@ -1,0 +1,3 @@
+sensor_msgs/Image acquisition_from_camera
+geometry_msgs/Twist com_pose
+geometry_msgs/Twist ee_pose_wrt_com
