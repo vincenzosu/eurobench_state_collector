@@ -11,6 +11,10 @@ from std_msgs.msg import Float64
 #from pykdl_utils.kdl_parser import kdl_tree_from_urdf_model
 #from pykdl_utils.kdl_kinematics import KDLKinematics
 from eurobench_state_collector.srv import MadrobDoorDummy
+from gazebo_msgs.srv import GetModelState
+from gazebo_msgs.srv import GetModelProperties
+from gazebo_msgs.srv import GetJointProperties
+
 
 import sys
 
@@ -107,26 +111,21 @@ def talker(ebws):
 #     self.door_pub = rospy.Publisher('/madrob/preprocessed_data/passage/door',
 #                                           Float64, queue_size=1)
 
-     r = rospy.Rate(10) #10hz
+    r = rospy.Rate(10) #10hz
 #     msg = EurobenchWorldState()
 #     msg.acquisition_from_camera = "ROS User"
 #     msg.com_pose.linear.x = 1.0
 #     msg.com_pose.linear.y = 1.0
 #     msg.com_pose.linear.x = 1.0
 
-     print ("initialized")
+    print ("initialized")
 
-#     while not rospy.is_shutdown():
-#         rospy.loginfo(msg)
-#         pub.publish(msg)
-#         r.sleep()
-
-     msg = Float64()
-     msg = 1.0
-     while not rospy.is_shutdown():
-         #rospy.loginfo(msg)
-         ebws.door_pub.publish(msg)
-         r.sleep()
+    msg = Float64()
+    
+    while not rospy.is_shutdown():
+        msg = getDoorAperture()
+        ebws.door_pub.publish(msg)
+        r.sleep()
 
 
 def callback(data):
@@ -143,6 +142,26 @@ def listener():
       # spin() simply keeps python from exiting until this node is stopped
 #    rospy.spin()
 #    print ("listener 4")
+
+def getDoorAperture(): 
+
+    try:
+        get_model_properties = rospy.ServiceProxy('/gazebo/get_model_properties', GetModelProperties)
+    except rospy.ServiceException, e:
+        print "ServiceProxy failed: %s"%e
+        exit(0)
+    model_prop = get_model_properties("door_simple")
+
+    try:
+        get_door_joint_props = rospy.ServiceProxy('/gazebo/get_joint_properties', GetJointProperties)
+    except rospy.ServiceException, e:
+        print "ServiceProxy failed: %s"%e
+        exit(0)
+
+    print('---------- door aperture ---------')
+    joint_prop = get_door_joint_props('joint_frame_door')
+    print(joint_prop.position[0])
+    return joint_prop.position[0]
 
 
 def main(args):
