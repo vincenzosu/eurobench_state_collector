@@ -14,6 +14,7 @@ from eurobench_state_collector.srv import MadrobDoorDummy
 from gazebo_msgs.srv import GetModelState
 from gazebo_msgs.srv import GetModelProperties
 from gazebo_msgs.srv import GetJointProperties
+from madrob_srvs.srv import *
 
 
 import sys
@@ -30,6 +31,8 @@ class eurobench_state_collector:
           self.door_pub = rospy.Publisher('/madrob/preprocessed_data/passage/door',
                                            Float64, queue_size=1)
 
+          self.door_handle_pub = rospy.Publisher('/madrob/preprocessed_data/passage/handle',
+                                           Float64, queue_size=1)
 
 
 
@@ -125,6 +128,10 @@ def talker(ebws):
     while not rospy.is_shutdown():
         msg = getDoorAperture()
         ebws.door_pub.publish(msg)
+
+        msg_handle = getHandlePosition()
+        ebws.door_handle_pub.publish(msg_handle)
+
         r.sleep()
 
 
@@ -134,6 +141,8 @@ def callback(data):
 
 def handle_madrob_door_dummy_srv(req):
     print("Handled dummy service")
+    return SetDoorControllerModeResponse(True, "")
+
 
 def listener():
 #    rospy.init_node('eurobench_worldstate_provider', anonymous=True)
@@ -161,14 +170,37 @@ def getDoorAperture():
     print('---------- door aperture ---------')
     joint_prop = get_door_joint_props('joint_frame_door')
     print(joint_prop.position[0])
+   
     return joint_prop.position[0]
 
+
+def getHandlePosition():
+    
+    try:
+        get_model_properties = rospy.ServiceProxy('/gazebo/get_model_properties', GetModelProperties)
+    except rospy.ServiceException, e:
+        print "ServiceProxy failed: %s"%e
+        exit(0)
+    model_prop = get_model_properties("door_simple")
+
+    try:
+        get_door_joint_props = rospy.ServiceProxy('/gazebo/get_joint_properties', GetJointProperties)
+    except rospy.ServiceException, e:
+        print "ServiceProxy failed: %s"%e
+        exit(0)
+
+    joint_prop_handle = get_door_joint_props('joint_door_lever')
+    print('---------- handle position ---------')
+    print(joint_prop_handle.position[0])
+
+    return joint_prop_handle.position[0]
 
 def main(args):
      ebws =  eurobench_state_collector()
      rospy.init_node('eurobench_state_collector', anonymous=True) #CHECK IF REMOVE 'PROVIDER'
 
-     s = rospy.Service('/madrob/door/set_mode', MadrobDoorDummy, handle_madrob_door_dummy_srv) 
+#     s = rospy.Service('/madrob/door/set_mode', MadrobDoorDummy, handle_madrob_door_dummy_srv) 
+     s = rospy.Service('/madrob/door/set_mode', SetDoorControllerMode, handle_madrob_door_dummy_srv) 
      print ("service madrob/door initialized in eurobench_state_collector_node")    
 
      try:
