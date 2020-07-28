@@ -16,7 +16,7 @@ from gazebo_msgs.srv import GetModelProperties
 from gazebo_msgs.srv import GetJointProperties
 from madrob_srvs.srv import *
 
-from sensor_msgs.msg import BaseIrBack1
+#from sensor_msgs.msg import BaseIrBack1
 
 import sys
 
