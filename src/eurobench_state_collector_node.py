@@ -16,6 +16,7 @@ from gazebo_msgs.srv import GetModelProperties
 from gazebo_msgs.srv import GetJointProperties
 from madrob_srvs.srv import *
 
+from sensor_msgs.msg import BaseIrBack1
 
 import sys
 
@@ -37,6 +38,13 @@ class eurobench_state_collector:
 
 
           # ################## where i am going to be subscribed #############
+          self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_back_1", 
+          									   self.ds_callback, queue_size=1)
+          
+                    self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_back_2", 
+          									   self.ds_callback, queue_size=1)
+          
+          
           self.image_camera = rospy.Subscriber("sensor_msgs/Image", Image,
                                                self.image_callback, queue_size=1)
           if VERBOSE:
