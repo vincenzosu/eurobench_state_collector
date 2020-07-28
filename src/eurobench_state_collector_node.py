@@ -113,6 +113,9 @@ class eurobench_state_collector:
           msg.com_pose.linear.y = 1.0
           msg.com_pose.linear.x = 1.0
           self.eb_ws_pub.publish(msg)
+          
+     def ds_callback(self, ros_data):
+         print ("call back from distance sensors")
 
 
 
