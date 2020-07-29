@@ -71,6 +71,10 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
 
+     def ds_callback(self, ros_data):
+           print ("callback from distance sensors")
+
+
 
      def compute_forward_kinematics():
  #          robot_urdf = URDF.from_xml_string("<robot name='reemc'></robot>") NON FUNZIONA!
@@ -114,9 +118,7 @@ class eurobench_state_collector:
           msg.com_pose.linear.x = 1.0
           self.eb_ws_pub.publish(msg)
           
-     def ds_callback(self, ros_data):
-          print ("callback from distance sensors")
-
+     
 
 
 def talker(ebws):
