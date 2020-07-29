@@ -70,8 +70,8 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
 
-#     def ds_callback(self, ros_data):
-#           print ("callback from distance sensors")
+     def ds_callback(self, ros_data):
+           print ("callback from distance sensors")
 
 
 
