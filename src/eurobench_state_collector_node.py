@@ -45,7 +45,7 @@ class eurobench_state_collector:
           self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_back_1", Float64,
           									   self.ds_callback, queue_size=1)
           if VERBOSE:
-               print ("subcribed on sensor_distances")									   
+               print ("subcribed on sensor_distances")
           
           
           self.image_camera = rospy.Subscriber("sensor_msgs/Image", Image,
@@ -129,6 +129,15 @@ def talker(ebws):
      #ebws.
 #     self.door_pub = rospy.Publisher('/madrob/preprocessed_data/passage/door',
 #                                           Float64, queue_size=1)
+
+
+    self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_back_0", Float64,
+          									   self.ds_callback, queue_size=1)
+          
+    self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_back_1", Float64,
+          									   self.ds_callback, queue_size=1)
+    if VERBOSE:
+        print ("subcribed on sensor_distances")
 
     r = rospy.Rate(10) #10hz
 #     msg = EurobenchWorldState()
