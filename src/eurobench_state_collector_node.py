@@ -37,7 +37,7 @@ class eurobench_state_collector:
 
 
           # ################## where i am going to be subscribed #############
-          self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_back_0", Float64
+          self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_back_0", Float64,
           									   self.ds_callback, queue_size=1)
           
 #          self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_back_1", 
@@ -71,7 +71,7 @@ class eurobench_state_collector:
 
 
      def ds_callback(self, ros_data):
-           print ("callback from distance sensors")
+          print ("callback from distance sensors")
 
 
 
