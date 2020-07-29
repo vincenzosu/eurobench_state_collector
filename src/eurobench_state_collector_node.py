@@ -25,6 +25,8 @@ VERBOSE=True
 class eurobench_state_collector:
      def __init__(self):
 
+          #self.sensor_readings = {}
+
           # ################### where i am goung to publish ##################
           #self.eb_ws_pub = rospy.Publisher('eurobench_state_collector',
           #                                 EurobenchWorldState, queue_size=1)
@@ -40,8 +42,10 @@ class eurobench_state_collector:
           self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_back_0", Float64,
           									   self.ds_callback, queue_size=1)
           
-#          self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_back_1", 
-#          									   self.image_callback, queue_size=1)
+          self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_back_1", Float64,
+          									   self.ds_callback, queue_size=1)
+          if VERBOSE:
+               print ("subcribed on sensor_distances")									   
           
           
           self.image_camera = rospy.Subscriber("sensor_msgs/Image", Image,
