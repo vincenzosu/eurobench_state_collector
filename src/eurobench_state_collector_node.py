@@ -115,7 +115,7 @@ class eurobench_state_collector:
           self.eb_ws_pub.publish(msg)
           
      def ds_callback(self, ros_data):
-         print ("callback from distance sensors")
+          print ("callback from distance sensors")
 
 
 
