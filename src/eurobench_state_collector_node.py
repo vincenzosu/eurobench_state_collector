@@ -174,9 +174,11 @@ def listener(self):
           
     self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_back_1", Float64,
           									   self.ds_callback, queue_size=1)
+    
+    print('---------- sensors reading ---------')
 
       # spin() simply keeps python from exiting until this node is stopped
-#    rospy.spin()
+    rospy.spin()
 #    print ("listener 4")
 
 def getDoorAperture(): 
