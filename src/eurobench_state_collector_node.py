@@ -2,7 +2,7 @@
 
 import rospy
 from sensor_msgs.msg import Image
-from sensor.msg import BaseIrFront0
+from sensor_msgs.msg import Range
 from sensor_msgs.msg import JointState
 #from ground_truth_odom.msg import *
 from geometry_msgs.msg import Twist
@@ -40,16 +40,16 @@ class eurobench_state_collector:
 
 
           # ################## where i am going to be subscribed #############
-          self.distance_sens_front_0 = rospy.Subscriber("/sensor/base_ir_front_0", Float64,
+          self.distance_sens_front_0 = rospy.Subscriber("/sensor/base_ir_front_0", Range,
           									   self.ds_callback, queue_size=1)
           
-          self.distance_sens_front_1 = rospy.Subscriber("/sensor/base_ir_front_1", Float64,
+          self.distance_sens_front_1 = rospy.Subscriber("/sensor/base_ir_front_1", Range,
           									   self.ds_callback, queue_size=1)
           									   
-          self.distance_sens_back_0 = rospy.Subscriber("/sensor/base_ir_back_0", Float64,
+          self.distance_sens_back_0 = rospy.Subscriber("/sensor/base_ir_back_0", Range,
           									   self.ds_callback, queue_size=1)
           
-          self.distance_sens_back_1 = rospy.Subscriber("/sensor/base_ir_back_1", Float64,
+          self.distance_sens_back_1 = rospy.Subscriber("/sensor/base_ir_back_1", Range,
           									   self.ds_callback, queue_size=1)
           if VERBOSE:
                print ("subcribed on sensor_distances")
