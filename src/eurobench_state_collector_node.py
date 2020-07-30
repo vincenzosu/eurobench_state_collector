@@ -178,7 +178,7 @@ def listener(self):
     print('---------- sensors reading ---------')
 
       # spin() simply keeps python from exiting until this node is stopped
-    rospy.spin()
+#    rospy.spin()
 #    print ("listener 4")
 
 def getDoorAperture(): 
@@ -219,10 +219,15 @@ def getHandlePosition():
         exit(0)
 
     joint_prop_handle = get_door_joint_props('joint_door_lever')
+    
     print('---------- handle position ---------')
     print(joint_prop_handle.position[0])
 
     return joint_prop_handle.position[0]
+
+
+
+
 
 def main(args):
      ebws =  eurobench_state_collector()
@@ -240,6 +245,8 @@ def main(args):
      except KeyboardInterrupt:
            print ("Shutting down ROS eurobench_state_collector module")
 
+
+     rospy.spin()
 
 if __name__ == '__main__':
      main(sys.argv)
