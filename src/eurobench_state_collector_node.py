@@ -223,6 +223,8 @@ def getHandlePosition():
 def main(args):
      ebws =  eurobench_state_collector()
      rospy.init_node('eurobench_state_collector', anonymous=True) #CHECK IF REMOVE 'PROVIDER'
+     
+     listener()
 
 #     s = rospy.Service('/madrob/door/set_mode', MadrobDoorDummy, handle_madrob_door_dummy_srv) 
      s = rospy.Service('/madrob/door/set_mode', SetDoorControllerMode, handle_madrob_door_dummy_srv) 
