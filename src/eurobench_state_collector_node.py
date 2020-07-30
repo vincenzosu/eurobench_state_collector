@@ -131,11 +131,7 @@ def talker(ebws):
 #                                           Float64, queue_size=1)
 
 
-    self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_back_0", Float64,
-          									   self.ds_callback, queue_size=1)
-          
-    self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_back_1", Float64,
-          									   self.ds_callback, queue_size=1)
+    
     if VERBOSE:
         print ("subcribed on sensor_distances")
 
@@ -172,6 +168,12 @@ def handle_madrob_door_dummy_srv(req):
 def listener():
 #    rospy.init_node('eurobench_worldstate_provider', anonymous=True)
     image_camera = rospy.Subscriber("sensor_msgs/Image", Image, callback)
+    
+    self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_back_0", Float64,
+          									   self.ds_callback, queue_size=1)
+          
+    self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_back_1", Float64,
+          									   self.ds_callback, queue_size=1)
 
       # spin() simply keeps python from exiting until this node is stopped
 #    rospy.spin()
