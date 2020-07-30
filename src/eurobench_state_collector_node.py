@@ -176,10 +176,10 @@ def listener(self):
 #    rospy.init_node('eurobench_worldstate_provider', anonymous=True)
     image_camera = rospy.Subscriber("sensor_msgs/Image", Image, callback)
     
-    self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_back_0", Float64,
+    self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_front_0", Float64,
           									   self.ds_callback, queue_size=1)
           
-    self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_back_1", Float64,
+    self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_front_1", Float64,
           									   self.ds_callback, queue_size=1)
     
     print('---------- sensors reading ---------')
