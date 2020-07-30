@@ -75,7 +75,8 @@ class eurobench_state_collector:
 
 
      def ds_callback(self, ros_data):
-          print ("callback from distance sensors")
+          print (ros_data)
+          print ("!!!!!!!!!!!callback from distance sensors")
 
 
 
@@ -246,7 +247,6 @@ def main(args):
            print ("Shutting down ROS eurobench_state_collector module")
 
 
-     rospy.spin()
 
 if __name__ == '__main__':
      main(sys.argv)
