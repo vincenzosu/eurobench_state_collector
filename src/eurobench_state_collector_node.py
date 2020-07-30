@@ -165,7 +165,7 @@ def handle_madrob_door_dummy_srv(req):
     return SetDoorControllerModeResponse(True, "")
 
 
-def listener():
+def listener(self):
 #    rospy.init_node('eurobench_worldstate_provider', anonymous=True)
     image_camera = rospy.Subscriber("sensor_msgs/Image", Image, callback)
     
@@ -226,7 +226,7 @@ def main(args):
      ebws =  eurobench_state_collector()
      rospy.init_node('eurobench_state_collector', anonymous=True) #CHECK IF REMOVE 'PROVIDER'
      
-     listener()
+     listener(self)
 
 #     s = rospy.Service('/madrob/door/set_mode', MadrobDoorDummy, handle_madrob_door_dummy_srv) 
      s = rospy.Service('/madrob/door/set_mode', SetDoorControllerMode, handle_madrob_door_dummy_srv) 
