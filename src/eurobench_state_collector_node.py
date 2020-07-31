@@ -161,48 +161,33 @@ class eurobench_state_collector:
             single_range = None
         
     def sensor_identifier(self, ros_data):
-        print("sensor identification -------------------")
         print (ros_data.header.frame_id[-1])
-        return ros_data.header.frame_id[-1]
+        return int(ros_data.header.frame_id[-1])%4
 
+    def publish_strips(self, tmp_ranges, ros_data):
+        sensorID = self.sensor_identifier(ros_data)
+        self.ranges[sensorID] = ros_data
+        if (self.are_ranges_complete(tmp_ranges)):
+            msg = Passage()
+            #msg.STATUS_OK = 1
+            msg.ranges[0] = tmp_ranges[0]
+            msg.ranges[1] = tmp_ranges[1]
+            msg.ranges[2] = tmp_ranges[2]
+            msg.ranges[3] = tmp_ranges[3]
+            tmp_ranges.publish(msg)
+            null_the_ranges(tmp_ranges)
 
     def cw_left_callback(self, ros_data):
-          #print (ros_data)
-        print ("callback from distance sensors")
-        sensorID = self.sensor_identifier(ros_data)
-        self.cw_left[sensorID] = ros_data
-        if (self.are_ranges_complete(self.cw_left)):
-            msg = Passage()
-            msg.STATUS_OK = 1
-            msg.ranges[0] = self.cw_left[0]
-            msg.ranges[1] = self.cw_left[1]
-            msg.ranges[2] = self.cw_left[2]
-            msg.ranges[3] = self.cw_left[3]
-            self.cw_left_pub.publish(msg)
-            null_the_ranges(self.cw_left)
-
+        self.publish_strips(self.cw_left, ros_data)
 
     def cw_right_callback(self, ros_data):
-        #print (ros_data)
-        print ("callback from distance sensors")
-        if (self.are_ranges_complete(self.cw_right)):
-            #print (ros_data)
-            msg = Passage()
-
+        self.publish_strips(self.cw_right, ros_data)
+                
     def ccw_left_callback(self, ros_data):
-        #print (ros_data)
-        print ("callback from distance sensors")
-        if (self.are_ranges_complete(self.ccw_left)):
-            #print (ros_data)
-            msg = Passage()
-          
+        self.publish_strips(self.ccw_left, ros_data)        
+                  
     def ccw_right_callback(self, ros_data):
-        #print (ros_data)
-        print ("callback from distance sensors")
-        if (self.are_ranges_complete(self.ccw_right)):
-            #print (ros_data)      
-            msg = Passage()
-
+        self.publish_strips(self.ccw_right, ros_data)        
 
 
     def compute_forward_kinematics():
