@@ -151,6 +151,7 @@ class eurobench_state_collector:
           #print (ros_data)
         print ("callback from distance sensors")
         if (is_vector_complete(self.cw_left)):
+            print (ros_data)
             #pub()
             #makethevectorZeroagain
 
@@ -159,17 +160,19 @@ class eurobench_state_collector:
         #print (ros_data)
         print ("callback from distance sensors")
         if (is_vector_complete(self.cw_right)):
+            print (ros_data)
 
     def ccw_left_callback(self, ros_data):
         #print (ros_data)
         print ("callback from distance sensors")
         if (is_vector_complete(self.ccw_left)):
+            print (ros_data)
           
     def ccw_right_callback(self, ros_data):
         #print (ros_data)
         print ("callback from distance sensors")
         if (is_vector_complete(self.ccw_right)):
-          
+            print (ros_data)      
 
 
 
