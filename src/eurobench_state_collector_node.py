@@ -160,7 +160,7 @@ class eurobench_state_collector:
         for single_range in ranges:
             single_range = None
         
-    def self.sensor_identifier(self, ros_data):
+    def sensor_identifier(self, ros_data):
         print("sensor identification -------------------")
         print (ros_data[header][frame_id]%4)
         return ros_data[header][frame_id]%4
@@ -169,7 +169,7 @@ class eurobench_state_collector:
     def cw_left_callback(self, ros_data):
           #print (ros_data)
         print ("callback from distance sensors")
-        sensorID = sensor_identifier(self, ros_data)
+        sensorID = self.sensor_identifier(self, ros_data)
         self.cw_left[sensorID] = ros_data
         if (self.are_ranges_complete(self.cw_left)):
             msg = Passage()
