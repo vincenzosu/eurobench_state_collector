@@ -143,7 +143,7 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
 
-    def is_vector_complete(vec):
+    def is_vector_complete(self, vec):
         return True
 
 
