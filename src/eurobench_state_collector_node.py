@@ -139,10 +139,29 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
 
-     def ds_callback(self, ros_data):
+     def cw_left_callback(self, ros_data):
+          #print (ros_data)
+          print ("callback from distance sensors")
+          if (is_vector_complete()):
+               #pub()
+               #makethevectorZeroagain
+
+
+     def cw_right_callback(self, ros_data):
           #print (ros_data)
           print ("callback from distance sensors")
           if (is vector_complete)
+
+     def ccw_left_callback(self, ros_data):
+          #print (ros_data)
+          print ("callback from distance sensors")
+          if (is vector_complete)
+          
+     def ccw_right_callback(self, ros_data):
+          #print (ros_data)
+          print ("callback from distance sensors")
+          if (is vector_complete)
+          
 
 
 
@@ -236,11 +255,11 @@ def listener(self):
 #    rospy.init_node('eurobench_worldstate_provider', anonymous=True)
     image_camera = rospy.Subscriber("sensor_msgs/Image", Image, callback)
     
-    self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_front_0", Float64,
-          									   self.ds_callback, queue_size=1)
+  #  self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_front_0", Float64,
+  #        									   self.ds_callback, queue_size=1)
           
-    self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_front_1", Float64,
-          									   self.ds_callback, queue_size=1)
+  #  self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_front_1", Float64,
+  #        									   self.ds_callback, queue_size=1)
     
     print('---------- sensors reading ---------')
 
