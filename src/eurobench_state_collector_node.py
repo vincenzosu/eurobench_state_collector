@@ -16,7 +16,7 @@ from gazebo_msgs.srv import GetModelState
 from gazebo_msgs.srv import GetModelProperties
 from gazebo_msgs.srv import GetJointProperties
 from madrob_srvs.srv import *
-from madrob_msgs.srv import Passage
+from madrob_msgs.msg import Passage
 import numpy as np
 
 
@@ -49,16 +49,16 @@ class eurobench_state_collector:
                                            
                                            
 #          self.ccw_left_pub = rospy.Publisher('/madrob/passage/ccw_left',
-#                                       QUI..., queue_size=1)                             
+#                                       Range, queue_size=1)                             
 
 #          self.ccw_right_pub =rospy.Publisher('/madrob/passage/ccw_right',
-#                                       QUI..., queue_size=1)                             
+#                                       Range, queue_size=1)                             
  
 #          self.cw_left_pub = rospy.Publisher('/madrob/passage/cw_left',
-#                                       QUI..., queue_size=1)                             
+#                                       Range, queue_size=1)                             
 
 #          self.cw_right_pub = rospy.Publisher('/madrob/passage/cw_right',
-#                                       QUI..., queue_size=1)                             
+#                                       Range, queue_size=1)                             
           
           
 
