@@ -162,8 +162,8 @@ class eurobench_state_collector:
         
     def sensor_identifier(self, ros_data):
         print("sensor identification -------------------")
-        print (ros_data[header][frame_id]%4)
-        return ros_data[header][frame_id]%4
+        print (ros_data['header']['frame_id']%4)
+        return ros_data['header']['frame_id']%4
 
 
     def cw_left_callback(self, ros_data):
