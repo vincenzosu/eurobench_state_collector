@@ -16,6 +16,8 @@ from gazebo_msgs.srv import GetModelState
 from gazebo_msgs.srv import GetModelProperties
 from gazebo_msgs.srv import GetJointProperties
 from madrob_srvs.srv import *
+import numpy as np
+
 
 
 import sys
@@ -27,8 +29,11 @@ class eurobench_state_collector:
      def __init__(self):
 
           #self.sensor_readings = {}
+          self.ccw = np.array([0, 0, 0, 0]) 
+          self.ccww = np.array([0, 0, 0, 0]) 
 
           # ################### where i am goung to publish ##################
+          
           #self.eb_ws_pub = rospy.Publisher('eurobench_state_collector',
           #                                 EurobenchWorldState, queue_size=1)
           self.door_pub = rospy.Publisher('/madrob/preprocessed_data/passage/door',
@@ -36,21 +41,74 @@ class eurobench_state_collector:
 
           self.door_handle_pub = rospy.Publisher('/madrob/preprocessed_data/passage/handle',
                                            Float64, queue_size=1)
+                                           
+                                           
+#          self.ccw_left_pub = rospy.Publisher('/madrob/passage/ccw_left',
+#                                       QUI..., queue_size=1)                             
 
+#          self.ccw_right_pub =rospy.Publisher('/madrob/passage/ccw_right',
+#                                       QUI..., queue_size=1)                             
+ 
+#          self.cw_left_pub = rospy.Publisher('/madrob/passage/cw_left',
+#                                       QUI..., queue_size=1)                             
 
+#          self.cw_right_pub = rospy.Publisher('/madrob/passage/cw_right',
+#                                       QUI..., queue_size=1)                             
+          
+          
 
           # ################## where i am going to be subscribed #############
           self.distance_sens_front_0 = rospy.Subscriber("/sensor/base_ir_front_0", Range,
-          									   self.ds_callback, queue_size=1)
+          									   self.cw_left_callback, queue_size=1)
           
           self.distance_sens_front_1 = rospy.Subscriber("/sensor/base_ir_front_1", Range,
-          									   self.ds_callback, queue_size=1)
+          									   self.cw_left_callback, queue_size=1)
+
+          self.distance_sens_front_2 = rospy.Subscriber("/sensor/base_ir_front_2", Range,
+          									   self.cw_left_callback, queue_size=1)
+
+          self.distance_sens_front_3 = rospy.Subscriber("/sensor/base_ir_front_3", Range,
+          									   self.cw_left_callback, queue_size=1)
+          									   
+
+          self.distance_sens_front_4 = rospy.Subscriber("/sensor/base_ir_front_4", Range,
+          									   self.cw_right_callback, queue_size=1)
+
+          self.distance_sens_front_5 = rospy.Subscriber("/sensor/base_ir_front_5", Range,
+          									   self.cw_right_callback, queue_size=1)
+
+          self.distance_sens_front_6 = rospy.Subscriber("/sensor/base_ir_front_6", Range,
+          									   self.cw_right_callback, queue_size=1)
+          							
+          self.distance_sens_front_7 = rospy.Subscriber("/sensor/base_ir_front_7", Range,
+          									   self.cw_right_callback, queue_size=1)
+          									   
+
+          									   
+
           									   
           self.distance_sens_back_0 = rospy.Subscriber("/sensor/base_ir_back_0", Range,
-          									   self.ds_callback, queue_size=1)
+          									   self.ccw_left_callback, queue_size=1)
           
           self.distance_sens_back_1 = rospy.Subscriber("/sensor/base_ir_back_1", Range,
-          									   self.ds_callback, queue_size=1)
+          									   self.ccw_left_callback, queue_size=1)
+          									   
+          self.distance_sens_back_2 = rospy.Subscriber("/sensor/base_ir_back_2", Range,
+          									   self.ccw_left_callback, queue_size=1)
+          									   
+          self.distance_sens_back_3 = rospy.Subscriber("/sensor/base_ir_back_3", Range,
+          									   self.ccw_left_callback, queue_size=1)          									   
+          self.distance_sens_back_4 = rospy.Subscriber("/sensor/base_ir_back_4", Range,
+          									   self.ccw_right_callback, queue_size=1)    
+          									   
+          self.distance_sens_back_5 = rospy.Subscriber("/sensor/base_ir_back_5", Range,
+          									   self.ccw_right_callback, queue_size=1)      
+          									   
+          self.distance_sens_back_6 = rospy.Subscriber("/sensor/base_ir_back_6", Range,
+          									   self.ccw_right_callback, queue_size=1)          									   
+          self.distance_sens_back_7 = rospy.Subscriber("/sensor/base_ir_back_7", Range,
+          									   self.ccw_right_callback, queue_size=1)          							
+          									   
           if VERBOSE:
                print ("subcribed on sensor_distances")
           
@@ -82,8 +140,9 @@ class eurobench_state_collector:
 
 
      def ds_callback(self, ros_data):
-          print (ros_data)
-          print ("!!!!!!!!!!!callback from distance sensors")
+          #print (ros_data)
+          print ("callback from distance sensors")
+          if (is vector_complete)
 
 
 
