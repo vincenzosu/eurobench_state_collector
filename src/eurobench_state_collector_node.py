@@ -29,8 +29,12 @@ class eurobench_state_collector:
     def __init__(self):
 
         #self.sensor_readings = {}
-        self.ccw = np.array([0, 0, 0, 0]) 
-        self.ccww = np.array([0, 0, 0, 0]) 
+        self.cw_left = np.array([0, 0, 0, 0]) 
+        self.cw_right = np.array([0, 0, 0, 0]) 
+
+        self.ccw_left = np.array([0, 0, 0, 0]) 
+        self.ccw_right = np.array([0, 0, 0, 0]) 
+
 
           # ################### where i am goung to publish ##################
           
@@ -139,11 +143,14 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
 
+    def is_vector_complete(vec):
+        return True
+
 
     def cw_left_callback(self, ros_data):
           #print (ros_data)
         print ("callback from distance sensors")
-        if (is_vector_complete()):
+        if (is_vector_complete(self.cw_left)):
             #pub()
             #makethevectorZeroagain
 
@@ -151,17 +158,17 @@ class eurobench_state_collector:
     def cw_right_callback(self, ros_data):
         #print (ros_data)
         print ("callback from distance sensors")
-        if (is_vector_complete()):
+        if (is_vector_complete(self.cw_right)):
 
     def ccw_left_callback(self, ros_data):
         #print (ros_data)
         print ("callback from distance sensors")
-        if (is_vector_complete):
+        if (is_vector_complete(self.ccw_left)):
           
     def ccw_right_callback(self, ros_data):
         #print (ros_data)
         print ("callback from distance sensors")
-        if (is_vector_complete):
+        if (is_vector_complete(self.ccw_right)):
           
 
 
