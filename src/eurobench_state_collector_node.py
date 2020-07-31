@@ -169,7 +169,7 @@ class eurobench_state_collector:
     def cw_left_callback(self, ros_data):
           #print (ros_data)
         print ("callback from distance sensors")
-        sensorID = sensor_identifier(ros_data)
+        sensorID = sensor_identifier(self, ros_data)
         self.cw_left[sensorID] = ros_data
         if (self.are_ranges_complete(self.cw_left)):
             msg = Passage()
