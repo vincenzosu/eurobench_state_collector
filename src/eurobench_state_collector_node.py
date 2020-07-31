@@ -161,7 +161,6 @@ class eurobench_state_collector:
             single_range = None
         
     def sensor_identifier(self, ros_data):
-        print (ros_data.header.frame_id[-1])
         return int(ros_data.header.frame_id[-1])%4
 
     def publish_strips(self, tmp_ranges, ros_data, ranges_pub):
