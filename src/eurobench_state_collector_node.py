@@ -48,17 +48,17 @@ class eurobench_state_collector:
                                            Float64, queue_size=1)
                                            
                                            
-#          self.ccw_left_pub = rospy.Publisher('/madrob/passage/ccw_left',
-#                                       Range, queue_size=1)                             
+        self.ccw_left_pub = rospy.Publisher('/madrob/passage/ccw_left', 
+                                        Passage, queue_size=1)                             
 
-#          self.ccw_right_pub =rospy.Publisher('/madrob/passage/ccw_right',
-#                                       Range, queue_size=1)                             
+        self.ccw_right_pub =rospy.Publisher('/madrob/passage/ccw_right',
+                                        Passage, queue_size=1)                             
  
-#          self.cw_left_pub = rospy.Publisher('/madrob/passage/cw_left',
-#                                       Range, queue_size=1)                             
+        self.cw_left_pub = rospy.Publisher('/madrob/passage/cw_left',
+                                        Passage, queue_size=1)                             
 
-#          self.cw_right_pub = rospy.Publisher('/madrob/passage/cw_right',
-#                                       Range, queue_size=1)                             
+        self.cw_right_pub = rospy.Publisher('/madrob/passage/cw_right',
+                                        Passage, queue_size=1)                             
           
           
 
