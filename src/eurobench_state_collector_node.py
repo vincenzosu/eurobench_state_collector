@@ -175,7 +175,7 @@ class eurobench_state_collector:
             msg.ranges[2] = tmp_ranges[2]
             msg.ranges[3] = tmp_ranges[3]
             ranges_pub.publish(msg)
-            null_the_ranges(tmp_ranges)
+            self.null_the_ranges(tmp_ranges)
 
     def cw_left_callback(self, ros_data):
         self.publish_strips(self.cw_left, ros_data, self.cw_left_pub)
