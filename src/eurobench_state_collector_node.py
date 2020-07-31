@@ -164,7 +164,7 @@ class eurobench_state_collector:
         print (ros_data.header.frame_id[-1])
         return int(ros_data.header.frame_id[-1])%4
 
-    def publish_strips(self, tmp_ranges, ros_data):
+    def publish_strips(self, tmp_ranges, ros_data, ranges_pub):
         sensorID = self.sensor_identifier(ros_data)
         tmp_ranges[sensorID] = ros_data
         if (self.are_ranges_complete(tmp_ranges)):
@@ -174,20 +174,20 @@ class eurobench_state_collector:
             msg.ranges[1] = tmp_ranges[1]
             msg.ranges[2] = tmp_ranges[2]
             msg.ranges[3] = tmp_ranges[3]
-            tmp_ranges.publish(msg)
+            ranges_pub.publish(msg)
             null_the_ranges(tmp_ranges)
 
     def cw_left_callback(self, ros_data):
-        self.publish_strips(self.cw_left, ros_data)
+        self.publish_strips(self.cw_left, ros_data, self.cw_left_pub)
 
     def cw_right_callback(self, ros_data):
-        self.publish_strips(self.cw_right, ros_data)
+        self.publish_strips(self.cw_right, ros_data, self.cw_right_pub)
                 
     def ccw_left_callback(self, ros_data):
-        self.publish_strips(self.ccw_left, ros_data)        
+        self.publish_strips(self.ccw_left, ros_data, self.ccw_left_pub)        
                   
     def ccw_right_callback(self, ros_data):
-        self.publish_strips(self.ccw_right, ros_data)        
+        self.publish_strips(self.ccw_right, ros_data, self.ccw_right_pub)        
 
 
     def compute_forward_kinematics():
