@@ -16,6 +16,7 @@ from gazebo_msgs.srv import GetModelState
 from gazebo_msgs.srv import GetModelProperties
 from gazebo_msgs.srv import GetJointProperties
 from madrob_srvs.srv import *
+from madrob_msgs.srv import Passage
 import numpy as np
 
 
