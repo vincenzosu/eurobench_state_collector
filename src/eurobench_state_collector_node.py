@@ -30,11 +30,15 @@ class eurobench_state_collector:
     def __init__(self):
 
         #self.sensor_readings = {}
-        self.cw_left = np.array([0, 0, 0, 0]) 
-        self.cw_right = np.array([0, 0, 0, 0]) 
+#        self.cw_left = np.array([0, 0, 0, 0]) 
+        self.cw_left = Ranges[4]
+#        self.cw_right = np.array([0, 0, 0, 0]) 
+        self.cw_right = Ranges[4]
 
-        self.ccw_left = np.array([0, 0, 0, 0]) 
-        self.ccw_right = np.array([0, 0, 0, 0]) 
+#        self.ccw_left = np.array([0, 0, 0, 0]) 
+        self.ccw_left =  Ranges[4]
+#        self.ccw_right = np.array([0, 0, 0, 0]) 
+        self.ccw_right = Ranges[4]
 
 
           # ################### where i am goung to publish ##################
@@ -47,6 +51,11 @@ class eurobench_state_collector:
         self.door_handle_pub = rospy.Publisher('/madrob/preprocessed_data/passage/handle',
                                            Float64, queue_size=1)
                                            
+        self.cw_left_pub = rospy.Publisher('/madrob/passage/cw_left',
+                                        Passage, queue_size=1)                             
+
+        self.cw_right_pub = rospy.Publisher('/madrob/passage/cw_right',
+                                        Passage, queue_size=1)        
                                            
         self.ccw_left_pub = rospy.Publisher('/madrob/passage/ccw_left', 
                                         Passage, queue_size=1)                             
@@ -54,11 +63,7 @@ class eurobench_state_collector:
         self.ccw_right_pub =rospy.Publisher('/madrob/passage/ccw_right',
                                         Passage, queue_size=1)                             
  
-        self.cw_left_pub = rospy.Publisher('/madrob/passage/cw_left',
-                                        Passage, queue_size=1)                             
-
-        self.cw_right_pub = rospy.Publisher('/madrob/passage/cw_right',
-                                        Passage, queue_size=1)                             
+                     
           
           
 
@@ -144,36 +149,58 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
 
-    def is_vector_complete(self, vec):
+    def are_ranges_complete(self, ranges):
+        for single_range in ranges:
+            if single_range == None:
+                return False
         return True
+        
+    def null_the_ranges(self, ranges):
+        for single_range in ranges:
+            single_range = None
+        
+    def sensor_identifier(self, ros_data):
+        print("sensor identification -------------------)
+        print (ros_data[header][frame_id]%4)
+        return ros_data[header][frame_id]%4
 
 
     def cw_left_callback(self, ros_data):
           #print (ros_data)
         print ("callback from distance sensors")
-        if (self.is_vector_complete(self.cw_left)):
-            print (ros_data)
-            #pub()
-            #makethevectorZeroagain
+        sensorID = sensor_identifier(ros_data)
+        self.cw_left[sensorID] = ros_data
+        if (self.are_ranges_complete(self.cw_left)):
+            msg = Passage()
+            msg.STATUS_OK = 1
+            msg.ranges[0] = self.cw_left[0]
+            msg.ranges[1] = self.cw_left[1]
+            msg.ranges[2] = self.cw_left[2]
+            msg.ranges[3] = self.cw_left[3]
+            self.cw_left_pub.publish(msg)
+            null_the_ranges(self.cw_left)
 
 
     def cw_right_callback(self, ros_data):
         #print (ros_data)
         print ("callback from distance sensors")
-        if (self.is_vector_complete(self.cw_right)):
-            print (ros_data)
+        if (self.are_ranges_complete(self.cw_right)):
+            #print (ros_data)
+            msg = Passage()
 
     def ccw_left_callback(self, ros_data):
         #print (ros_data)
         print ("callback from distance sensors")
-        if (self.is_vector_complete(self.ccw_left)):
-            print (ros_data)
+        if (self.are_ranges_complete(self.ccw_left)):
+            #print (ros_data)
+            msg = Passage()
           
     def ccw_right_callback(self, ros_data):
         #print (ros_data)
         print ("callback from distance sensors")
-        if (self.is_vector_complete(self.ccw_right)):
-            print (ros_data)      
+        if (self.are_ranges_complete(self.ccw_right)):
+            #print (ros_data)      
+            msg = Passage()
 
 
 
