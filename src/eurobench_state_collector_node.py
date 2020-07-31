@@ -166,7 +166,7 @@ class eurobench_state_collector:
 
     def publish_strips(self, tmp_ranges, ros_data):
         sensorID = self.sensor_identifier(ros_data)
-        self.ranges[sensorID] = ros_data
+        tmp_ranges[sensorID] = ros_data
         if (self.are_ranges_complete(tmp_ranges)):
             msg = Passage()
             #msg.STATUS_OK = 1
