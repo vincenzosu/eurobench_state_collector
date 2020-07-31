@@ -26,20 +26,20 @@ VERBOSE=True
 #VERBOSE=False
 
 class eurobench_state_collector:
-     def __init__(self):
+    def __init__(self):
 
-          #self.sensor_readings = {}
-          self.ccw = np.array([0, 0, 0, 0]) 
-          self.ccww = np.array([0, 0, 0, 0]) 
+        #self.sensor_readings = {}
+        self.ccw = np.array([0, 0, 0, 0]) 
+        self.ccww = np.array([0, 0, 0, 0]) 
 
           # ################### where i am goung to publish ##################
           
           #self.eb_ws_pub = rospy.Publisher('eurobench_state_collector',
           #                                 EurobenchWorldState, queue_size=1)
-          self.door_pub = rospy.Publisher('/madrob/preprocessed_data/passage/door',
+        self.door_pub = rospy.Publisher('/madrob/preprocessed_data/passage/door',
                                            Float64, queue_size=1)
 
-          self.door_handle_pub = rospy.Publisher('/madrob/preprocessed_data/passage/handle',
+        self.door_handle_pub = rospy.Publisher('/madrob/preprocessed_data/passage/handle',
                                            Float64, queue_size=1)
                                            
                                            
@@ -58,125 +58,126 @@ class eurobench_state_collector:
           
 
           # ################## where i am going to be subscribed #############
-          self.distance_sens_front_0 = rospy.Subscriber("/sensor/base_ir_front_0", Range,
+        self.distance_sens_front_0 = rospy.Subscriber("/sensor/base_ir_front_0", Range,
           									   self.cw_left_callback, queue_size=1)
           
-          self.distance_sens_front_1 = rospy.Subscriber("/sensor/base_ir_front_1", Range,
+        self.distance_sens_front_1 = rospy.Subscriber("/sensor/base_ir_front_1", Range,
           									   self.cw_left_callback, queue_size=1)
 
-          self.distance_sens_front_2 = rospy.Subscriber("/sensor/base_ir_front_2", Range,
+        self.distance_sens_front_2 = rospy.Subscriber("/sensor/base_ir_front_2", Range,
           									   self.cw_left_callback, queue_size=1)
 
-          self.distance_sens_front_3 = rospy.Subscriber("/sensor/base_ir_front_3", Range,
+        self.distance_sens_front_3 = rospy.Subscriber("/sensor/base_ir_front_3", Range,
           									   self.cw_left_callback, queue_size=1)
           									   
 
-          self.distance_sens_front_4 = rospy.Subscriber("/sensor/base_ir_front_4", Range,
+        self.distance_sens_front_4 = rospy.Subscriber("/sensor/base_ir_front_4", Range,
           									   self.cw_right_callback, queue_size=1)
 
-          self.distance_sens_front_5 = rospy.Subscriber("/sensor/base_ir_front_5", Range,
+        self.distance_sens_front_5 = rospy.Subscriber("/sensor/base_ir_front_5", Range,
           									   self.cw_right_callback, queue_size=1)
 
-          self.distance_sens_front_6 = rospy.Subscriber("/sensor/base_ir_front_6", Range,
+        self.distance_sens_front_6 = rospy.Subscriber("/sensor/base_ir_front_6", Range,
           									   self.cw_right_callback, queue_size=1)
           							
-          self.distance_sens_front_7 = rospy.Subscriber("/sensor/base_ir_front_7", Range,
+        self.distance_sens_front_7 = rospy.Subscriber("/sensor/base_ir_front_7", Range,
           									   self.cw_right_callback, queue_size=1)
           									   
 
           									   
 
           									   
-          self.distance_sens_back_0 = rospy.Subscriber("/sensor/base_ir_back_0", Range,
+        self.distance_sens_back_0 = rospy.Subscriber("/sensor/base_ir_back_0", Range,
           									   self.ccw_left_callback, queue_size=1)
           
-          self.distance_sens_back_1 = rospy.Subscriber("/sensor/base_ir_back_1", Range,
+        self.distance_sens_back_1 = rospy.Subscriber("/sensor/base_ir_back_1", Range,
           									   self.ccw_left_callback, queue_size=1)
           									   
-          self.distance_sens_back_2 = rospy.Subscriber("/sensor/base_ir_back_2", Range,
+        self.distance_sens_back_2 = rospy.Subscriber("/sensor/base_ir_back_2", Range,
           									   self.ccw_left_callback, queue_size=1)
           									   
-          self.distance_sens_back_3 = rospy.Subscriber("/sensor/base_ir_back_3", Range,
+        self.distance_sens_back_3 = rospy.Subscriber("/sensor/base_ir_back_3", Range,
           									   self.ccw_left_callback, queue_size=1)          									   
-          self.distance_sens_back_4 = rospy.Subscriber("/sensor/base_ir_back_4", Range,
+        self.distance_sens_back_4 = rospy.Subscriber("/sensor/base_ir_back_4", Range,
           									   self.ccw_right_callback, queue_size=1)    
           									   
-          self.distance_sens_back_5 = rospy.Subscriber("/sensor/base_ir_back_5", Range,
-          									   self.ccw_right_callback, queue_size=1)      
+        self.distance_sens_back_5 = rospy.Subscriber("/sensor/base_ir_back_5", Range,
+        									   self.ccw_right_callback, queue_size=1)      
+        									   
+        self.distance_sens_back_6 = rospy.Subscriber("/sensor/base_ir_back_6", Range,
+        									   self.ccw_right_callback, queue_size=1)          									   
+        self.distance_sens_back_7 = rospy.Subscriber("/sensor/base_ir_back_7", Range,
+        									   self.ccw_right_callback, queue_size=1)          							
           									   
-          self.distance_sens_back_6 = rospy.Subscriber("/sensor/base_ir_back_6", Range,
-          									   self.ccw_right_callback, queue_size=1)          									   
-          self.distance_sens_back_7 = rospy.Subscriber("/sensor/base_ir_back_7", Range,
-          									   self.ccw_right_callback, queue_size=1)          							
-          									   
-          if VERBOSE:
-               print ("subcribed on sensor_distances")
+        if VERBOSE:
+             print ("subcribed on sensor_distances")
           
           
-          self.image_camera = rospy.Subscriber("sensor_msgs/Image", Image,
-                                               self.image_callback, queue_size=1)
-          if VERBOSE:
-               print ("subcribed on sensor_msgs.Image")
+        self.image_camera = rospy.Subscriber("sensor_msgs/Image", Image,
+                                             self.image_callback, queue_size=1)
+        if VERBOSE:
+             print ("subcribed on sensor_msgs.Image")
 
 
-          self.ee_pose_wrt_com = rospy.Subscriber("ground_truth_odom", Twist,
-                                               self.com_pose_callback, queue_size=1)
-          if VERBOSE:
-               print ("subcribed on groud truth odom")
+        self.ee_pose_wrt_com = rospy.Subscriber("ground_truth_odom", Twist,
+                                             self.com_pose_callback, queue_size=1)
+        if VERBOSE:
+             print ("subcribed on groud truth odom")
 
          # self.ee_pose = rospy.Subscriber("geometry_msgs/Twist", Twist,
          #                                      self.ee_pose_callback, queue_size=1)
 
-          if VERBOSE:
-               print ("subcribed on joint states")
-          self.ee_pose = rospy.Subscriber("sensor_msgs/JointState", Twist,
-                                               self.ee_pose_callback, queue_size=1)
+        if VERBOSE:
+             print ("subcribed on joint states")
+        self.ee_pose = rospy.Subscriber("sensor_msgs/JointState", Twist,
+                                             self.ee_pose_callback, queue_size=1)
 
 
-          if VERBOSE:
-               print ("setup of the kdl kinematics")
-               # pykdl_utils setup
+        if VERBOSE:
+             print ("setup of the kdl kinematics")
+             # pykdl_utils setup
           #compute_forward_kinematics()
 
 
-     def cw_left_callback(self, ros_data):
+
+    def cw_left_callback(self, ros_data):
           #print (ros_data)
-          print ("callback from distance sensors")
-          if (is_vector_complete()):
-               #pub()
-               #makethevectorZeroagain
+        print ("callback from distance sensors")
+        if (is_vector_complete()):
+            #pub()
+            #makethevectorZeroagain
 
 
-     def cw_right_callback(self, ros_data):
-          #print (ros_data)
-          print ("callback from distance sensors")
-          if (is vector_complete)
+    def cw_right_callback(self, ros_data):
+        #print (ros_data)
+        print ("callback from distance sensors")
+        if (is_vector_complete()):
 
-     def ccw_left_callback(self, ros_data):
-          #print (ros_data)
-          print ("callback from distance sensors")
-          if (is vector_complete)
+    def ccw_left_callback(self, ros_data):
+        #print (ros_data)
+        print ("callback from distance sensors")
+        if (is_vector_complete):
           
-     def ccw_right_callback(self, ros_data):
-          #print (ros_data)
-          print ("callback from distance sensors")
-          if (is vector_complete)
+    def ccw_right_callback(self, ros_data):
+        #print (ros_data)
+        print ("callback from distance sensors")
+        if (is_vector_complete):
           
 
 
 
-     def compute_forward_kinematics():
+    def compute_forward_kinematics():
  #          robot_urdf = URDF.from_xml_string("<robot name='reemc'></robot>") NON FUNZIONA!
-           print("forward kinematics")
-           robot_urdf = URDF.from_parameter_server()
+        print("forward kinematics")
+        robot_urdf = URDF.from_parameter_server()
 
-           print(robot_urdf)
-           robot_urdf = URDF.from_xml_file("reemc_simulation/reemc_gazebo/models/reemc_full/model.urdf")
-           kdl_kin = KDLKinematics(robot_urdf, 'arm_right_1_joint', 'arm_right_7_joint')
-           tree = kdl_tree_from_urdf_model(robot_urdf)
-           print (tree.getNrOfSegments())
-           chain = tree.getChain( 'arm_right_1_joint', 'arm_right_7_joint')
-           print (chain.getNrOfJoints())
+        print(robot_urdf)
+        robot_urdf = URDF.from_xml_file("reemc_simulation/reemc_gazebo/models/reemc_full/model.urdf")
+        kdl_kin = KDLKinematics(robot_urdf, 'arm_right_1_joint', 'arm_right_7_joint')
+        tree = kdl_tree_from_urdf_model(robot_urdf)
+        print (tree.getNrOfSegments())
+        chain = tree.getChain( 'arm_right_1_joint', 'arm_right_7_joint')
+        print (chain.getNrOfJoints())
 
      #     robot = URDF.from_parameter_server()
       #    tree = kdl_tree_from_urdf_model(robot)
@@ -185,27 +186,26 @@ class eurobench_state_collector:
       #    print (chain.getNrOfJoints())
 
 
-     def com_pose_callback(self, ros_data):
-          msg = EurobenchWorldState()
+    def com_pose_callback(self, ros_data):
+        msg = EurobenchWorldState()
      #     msg.com_pose.linear =   #qui ci metto graound truth odom!! (pose and angle)
-     def ee_pose_callback(self, ros_data):
-          msg = EurobenchWorldState()
+    def ee_pose_callback(self, ros_data):
+        msg = EurobenchWorldState()
 
-          msg.ee_pose_wrt_com.linear.x = 1.0
-          msg.ee_pose_wrt_com.linear.y = 1.0
-          msg.ee_pose_wrt_com.linear.x = 1.0
-          self.eb_ws_pub.publish(msg)
+        msg.ee_pose_wrt_com.linear.x = 1.0
+        msg.ee_pose_wrt_com.linear.y = 1.0
+        msg.ee_pose_wrt_com.linear.x = 1.0
+        self.eb_ws_pub.publish(msg)
 
-     def image_callback(self, ros_data):
-          if VERBOSE :
-               print ('received image of type: "%s"' % ros_data.format)
+    def image_callback(self, ros_data):
+        if VERBOSE :
+            print ('received image of type: "%s"' % ros_data.format)
+        msg = EurobenchWorldState()
 
-          msg = EurobenchWorldState()
-
-          msg.com_pose.linear.x = 1.0
-          msg.com_pose.linear.y = 1.0
-          msg.com_pose.linear.x = 1.0
-          self.eb_ws_pub.publish(msg)
+        msg.com_pose.linear.x = 1.0
+        msg.com_pose.linear.y = 1.0
+        msg.com_pose.linear.x = 1.0
+        self.eb_ws_pub.publish(msg)
           
      
 
