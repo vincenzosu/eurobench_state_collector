@@ -31,14 +31,15 @@ class eurobench_state_collector:
 
         #self.sensor_readings = {}
 #        self.cw_left = np.array([0, 0, 0, 0]) 
-        self.cw_left = Range[4]
+        self.cw_left =  np.array([None, None, None, None])
 #        self.cw_right = np.array([0, 0, 0, 0]) 
-        self.cw_right = Range[4]
+#        self.cw_right = [None]*4
+        self.cw_right = np.array([None, None, None, None])
 
 #        self.ccw_left = np.array([0, 0, 0, 0]) 
-        self.ccw_left =  Range[4]
+        self.ccw_left =  np.array([None, None, None, None])
 #        self.ccw_right = np.array([0, 0, 0, 0]) 
-        self.ccw_right = Range[4]
+        self.ccw_right = np.array([None, None, None, None])
 
 
           # ################### where i am goung to publish ##################
