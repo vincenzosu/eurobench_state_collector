@@ -160,7 +160,7 @@ class eurobench_state_collector:
             single_range = None
         
     def sensor_identifier(self, ros_data):
-        print("sensor identification -------------------)
+        print("sensor identification -------------------")
         print (ros_data[header][frame_id]%4)
         return ros_data[header][frame_id]%4
 
