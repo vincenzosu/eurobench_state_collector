@@ -166,7 +166,7 @@ class eurobench_state_collector:
 
         command = "QT_X11_NO_MITSHM=1 roslaunch  {0} {1}".format(package, launch_file)
 
-        self.p = subprocess.Popen(command, shell=True, capture_output=False)
+        self.p = subprocess.Popen(command, shell=True)
         
 
 
