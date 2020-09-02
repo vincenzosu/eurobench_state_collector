@@ -151,12 +151,27 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
     def startSim(self):
+'''
         package = 'eurobench_reemc_door'
         executable = 'reemc_door.launch'
         node = roslaunch.core.Node(package, executable)
         launch = roslaunch.scriptapi.ROSLaunch()    
         launch.start()
-        process = launch.launch(node)
+        process = launch.launch(node) '''
+        package = 'eurobench_reemc_door'
+        launch_file = 'reemc_door.launch'
+
+        command = "roslaunch  {0} {1}".format(package, launch_file)
+
+        p = subprocess.Popen(command, shell=True)
+
+        state = p.poll()
+        if state is None:
+            rospy.loginfo("process is running fine")
+        elif state < 0:
+            rospy.loginfo("Process terminated with error")
+        elif state > 0:
+            rospy.loginfo("Process terminated without error")
 
     def are_ranges_complete(self, ranges):
         for single_range in ranges:
