@@ -194,7 +194,7 @@ class eurobench_state_collector:
         roslaunch.configure_logging(uuid)
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
         
-        launch_files = [(launch_file, roslaunch_args)]
+        launch_files = (launch_file, roslaunch_args)
         print launch_files
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, launch_files)
         self.launch.start()
