@@ -223,7 +223,7 @@ class eurobench_state_collector:
         
         
   # DA QUI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++        
-     def retrieveBenchmarkConfiguration(ebws):
+    def retrieveBenchmarkConfiguration(ebws):
         # Based on the currently selected benchmark type
         get_benchmark_params = rospy.ServiceProxy('madrob/gui/benchmark_params', MadrobBenchmarkParams)
         response = get_benchmark_params()
