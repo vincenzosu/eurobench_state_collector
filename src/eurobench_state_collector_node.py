@@ -337,13 +337,13 @@ def retrieveBenchmarkConfiguration(ebws):
     get_benchmark_params = rospy.ServiceProxy('madrob/gui/benchmark_params', MadrobBenchmarkParams)
     response = get_benchmark_params()
     ebws.current_benchmark_name = response.benchmark_type
-    print ("benchmark name: ", ebws.current_benchmark_name)
+    print (ebws.current_benchmark_name)
 #    ebws.current_benchmark_type = ebws.config[ebws.current_benchmark_name]
 
     ebws.door_opening_side = response.door_opening_side
-    print("ebws.door_opening_side: ", ebws.door_opening_side)
+    print(ebws.door_opening_side)
     ebws.robot_approach_side = response.robot_approach_side
-    print ("ebws.robot_approach_side: ", response.robot_approach_side)
+    print (response.robot_approach_side)
 '''
     # Set door controller mode
     door_node_name = rospy.get_param('testbed_nodes')['door']
