@@ -183,22 +183,18 @@ class eurobench_state_collector:
         package = 'eurobench_reemc_door'
         launch_file = 'reemc_door.launch'
         
-        cli_args = ['pkg1', 'file1.launch', 'door:=simple', 'direction:=pull', 'gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"']
-        roslaunch_args = cli_args[2:]
-
-
-        #QT_X11_NO_MITSHM=1 roslaunch eurobench_reemc_door reemc_door.launch door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"
-
-
         uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch.configure_logging(uuid)
+        
+        roslaunch.core.Node(package, launch_file, name=None, namespace='/', 
+                 machine_name=None, args='door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"', 
+                 respawn=False, respawn_delay=0.0, 
+                 remap_args=None, env_args=None, output=None, cwd=None, 
+                 launch_prefix=None, required=False, filename='<unknown>')
+                 
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-        
-        
-        launch_files = (launch_file, roslaunch_args[0:])
-        print launch_files
-        self.launch = roslaunch.parent.ROSLaunchParent(uuid, launch_files)
-        self.launch.start()
+        self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
+        launch.start()
 
     def are_ranges_complete(self, ranges):
         for single_range in ranges:
