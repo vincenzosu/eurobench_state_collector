@@ -161,15 +161,14 @@ class eurobench_state_collector:
         launch.start()
         process = launch.launch(node) '''
         
+        
+        ''' this work
         package = 'eurobench_reemc_door'
         launch_file = 'reemc_door.launch'
 
         command = "QT_X11_NO_MITSHM=1 roslaunch  {0} {1}".format(package, launch_file)
 
         self.p = subprocess.Popen(command, shell=True)
-        
-
-
 
         state = p.poll()
         if state is None:
@@ -178,6 +177,15 @@ class eurobench_state_collector:
             rospy.loginfo("Process terminated with error")
         elif state > 0:
             rospy.loginfo("Process terminated without error")
+        '''
+        
+        package = 'eurobench_reemc_door'
+        launch_file = 'reemc_door.launch'
+        uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
+        roslaunch.configure_logging(uuid)
+        launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
+        launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
+        launch.start()
 
     def are_ranges_complete(self, ranges):
         for single_range in ranges:
@@ -398,7 +406,7 @@ def restartSim(ebws):
 #    print process.is_alive()
 #    process.stop()
 
-    ebws.p.stdin.close()
+   # ebws.p.stdin.close()
 
         
     
