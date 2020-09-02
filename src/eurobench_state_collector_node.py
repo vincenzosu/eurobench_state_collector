@@ -181,14 +181,14 @@ class eurobench_state_collector:
         '''
         
         package = 'eurobench_reemc_door'
-        launch_file = 'reemc_door.launch door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"'
+        launch_file = 'reemc_door.launch'
         
         #QT_X11_NO_MITSHM=1 roslaunch eurobench_reemc_door reemc_door.launch door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"
 
 
         uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch.configure_logging(uuid)
-        launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
+        launch_file = [os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file),  'door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"']
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
         self.launch.start()
 
