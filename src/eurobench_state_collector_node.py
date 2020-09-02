@@ -151,7 +151,7 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
     def startSim(self):
-'''
+        '''
         package = 'eurobench_reemc_door'
         executable = 'reemc_door.launch'
         node = roslaunch.core.Node(package, executable)
