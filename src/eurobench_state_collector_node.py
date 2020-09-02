@@ -194,7 +194,7 @@ class eurobench_state_collector:
                  
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
-        launch.start()
+        self.launch.start()
 
     def are_ranges_complete(self, ranges):
         for single_range in ranges:
