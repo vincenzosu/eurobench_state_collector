@@ -175,6 +175,7 @@ class eurobench_state_collector:
         print launch_file
         cli_args = [launch_file,'gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"']
         roslaunch_args = cli_args[1:]
+        uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch_file = [(roslaunch.rlutil.resolve_launch_arguments(cli_args)[0], roslaunch_args)]
         parent = roslaunch.parent.ROSLaunchParent(uuid, roslaunch_file)
         parent.start()
