@@ -345,7 +345,7 @@ def retrieveBenchmarkConfiguration(ebws):
     ebws.current_robot_approach_side = response.robot_approach_side
     print (ebws.current_robot_approach_side)
     
-    return (tuple(ebws.current_benchmark_name , ebws.current_door_opening_side , ebws.current_robot_approach_side))
+    return [ebws.current_benchmark_name , ebws.current_door_opening_side , ebws.current_robot_approach_side]
 '''
 
     # Set door controller mode
