@@ -186,11 +186,7 @@ class eurobench_state_collector:
         uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch.configure_logging(uuid)
         
-        roslaunch.core.Node(package, launch_file, name=None, namespace='/', 
-                 machine_name=None, args='door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"', 
-                 respawn=False, respawn_delay=0.0, 
-                 remap_args=None, env_args=None, output=None, cwd=None, 
-                 launch_prefix=None, required=False, filename='<unknown>')
+        roslaunch.core.Node(package, launch_file, args='door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"')
                  
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
