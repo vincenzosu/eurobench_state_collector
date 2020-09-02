@@ -21,6 +21,7 @@ from eurobench_bms_msgs_and_srvs.srv import *
 
 import roslaunch
 import subprocess
+import rospkg
 import os
 import numpy as np
 
