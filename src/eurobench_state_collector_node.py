@@ -193,7 +193,7 @@ class eurobench_state_collector:
         uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch.configure_logging(uuid)
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-        self.launch = roslaunch.parent.ROSLaunchParent(uuid, (launch_file, roslaunch_args))
+        self.launch = roslaunch.parent.ROSLaunchParent(uuid, [(launch_file, roslaunch_args)])
         self.launch.start()
 
     def are_ranges_complete(self, ranges):
