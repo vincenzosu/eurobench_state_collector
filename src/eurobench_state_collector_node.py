@@ -283,12 +283,13 @@ class eurobench_state_collector:
             else:
                 rospy.logerr('Error setting CCW door LUT: %s' % (ccw_door_lut_response.message))
     '''
+'''
     def benchmarkConfigurationHasChanged(ebws):
         if (ebws.current_benchmark_name ) ebws.current_benchmark_type ebws.current_door_opening_side ebws.current_robot_approach_side
         (ebws.old_benchmark_name ) ebws.old_benchmark_type ebws.old_door_opening_side ebws.old_robot_approach_side
             
     def restartSim():
-        
+        '''
   # A QUI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++        
 
 
