@@ -343,9 +343,19 @@ def retrieveBenchmarkConfiguration(ebws):
 #    return [ebws.current_benchmark_name , ebws.current_door_opening_side , ebws.current_robot_approach_side]
 
 def benchmarkConfigurationHasChanged(ebws):
-    if VERBOSE: 
-        print("PARAMETERS ARE CHANGED")
+    if (ebws.current_benchmark_name != ebws.old_benchmark_name 
+        or ebws.current_door_opening_side != ebws.old_door_opening_side
+        or ebws.current_robot_approach_side != ebws.old_robot_approach_side):
+        ebws.old_benchmark_name = ebws.current_benchmark_name
+        ebws.old_door_opening_side = ebws.current_door_opening_side
+        ebws.old_robot_approach_side = ebws.current_robot_approach_side
+        if VERBOSE: 
+            print("PARAMETERS ARE CHANGED")
 
+        return True;
+    return False;
+         
+    
 def restartSim():
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
 
