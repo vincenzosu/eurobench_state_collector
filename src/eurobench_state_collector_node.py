@@ -35,7 +35,15 @@ class eurobench_state_collector:
         self.cw_right = np.array([None, None, None, None]) 
         self.ccw_left = np.array([None, None, None, None])
         self.ccw_right = np.array([None, None, None, None])
-
+        
+        self.current_benchmark_name = None
+        self.current_door_opening_side = None
+        self.current_robot_approach_side = None
+        
+        self.old_benchmark_name = None
+        self.old_door_opening_side = None
+        self.old_robot_approach_side = None
+        
 
         # ################### where i am goung to publish ##################
           
@@ -230,20 +238,10 @@ def talker(ebws):
      #ebws.
 #     self.door_pub = rospy.Publisher('/madrob/preprocessed_data/passage/door',
 #                                           Float64, queue_size=1)
-
-
-    
     if VERBOSE:
         print ("subcribed on sensor_distances")
 
     r = rospy.Rate(10) #10hz
-#     msg = EurobenchWorldState()
-#     msg.acquisition_from_camera = "ROS User"
-#     msg.com_pose.linear.x = 1.0
-#     msg.com_pose.linear.y = 1.0
-#     msg.com_pose.linear.x = 1.0
-
-    print ("initialized")
 
     msg = Float64()
     
@@ -255,7 +253,7 @@ def talker(ebws):
         ebws.door_handle_pub.publish(msg_handle)
 
         retrieveBenchmarkConfiguration(ebws)
-        #if (benchmarkConfigurationHasChanged(ebws)):
+        if (benchmarkConfigurationHasChanged(ebws)):
         #    restartSim()
 
         r.sleep()
@@ -340,8 +338,9 @@ def retrieveBenchmarkConfiguration(ebws):
     ebws.current_door_opening_side = response.door_opening_side
     #print(ebws.current_door_opening_side)
     ebws.current_robot_approach_side = response.robot_approach_side
-    #print (ebws.current_robot_approach_side)
-    return [ebws.current_benchmark_name , ebws.current_door_opening_side , ebws.current_robot_approach_side]
+    if VERBOSE:
+        print [ebws.current_benchmark_name , ebws.current_door_opening_side , ebws.current_robot_approach_side]
+#    return [ebws.current_benchmark_name , ebws.current_door_opening_side , ebws.current_robot_approach_side]
 
 
 
@@ -351,7 +350,6 @@ def main(args):
      
      listener(ebws)
 
-#     s = rospy.Service('/madrob/door/set_mode', MadrobDoorDummy, handle_madrob_door_dummy_srv) 
      s = rospy.Service('/madrob/door/set_mode', SetDoorControllerMode, handle_madrob_door_dummy_srv) 
      print ("service madrob/door initialized in eurobench_state_collector_node")    
 
