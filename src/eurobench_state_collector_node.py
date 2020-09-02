@@ -161,14 +161,15 @@ class eurobench_state_collector:
         launch.start()
         process = launch.launch(node) '''
         
-        
         package = 'eurobench_reemc_door'
         launch_file = 'reemc_door.launch'
 
-#        command = "roslaunch  {0} {1}".format(package, launch_file)
-        command = "roslaunch  {0} {1}".format(package, launch_file)        
+        command = "QT_X11_NO_MITSHM=1 roslaunch  {0} {1}".format(package, launch_file)
 
-        p = subprocess.Popen(command, shell=True)
+        self.p = subprocess.Popen(command, shell=True, capture_output=False)
+        
+
+
 
         state = p.poll()
         if state is None:
@@ -283,7 +284,7 @@ def talker(ebws):
 
         retrieveBenchmarkConfiguration(ebws)
         if (benchmarkConfigurationHasChanged(ebws)):
-            restartSim()
+            restartSim(ebws)
 
         r.sleep()
 
@@ -378,24 +379,27 @@ def benchmarkConfigurationHasChanged(ebws):
     return False;
          
     
-def restartSim():
+def restartSim(ebws):
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
-    package = 'eurobench_reemc_door'
+#    package = 'eurobench_reemc_door'
         
         #QT_X11_NO_MITSHM=1 roslaunch eurobench_reemc_door reemc_door.launch door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"
         
-    executable = 'reemc_door.launch'
+#    executable = 'reemc_door.launch'
     #executable = 'reemc_door.launch door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"'
     
     #executable = 'rqt_gui'
-    node = roslaunch.core.Node(package, executable)
+#    node = roslaunch.core.Node(package, executable)
 
-    launch = roslaunch.scriptapi.ROSLaunch()
-    launch.start()
+#    launch = roslaunch.scriptapi.ROSLaunch()
+#    launch.start()
 
-    process = launch.launch(node)
-    print process.is_alive()
-    process.stop()
+#    process = launch.launch(node)
+#    print process.is_alive()
+#    process.stop()
+
+    ebws.p.stdin.close()
+
         
     
 #    command
