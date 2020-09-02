@@ -183,7 +183,7 @@ class eurobench_state_collector:
         package = 'eurobench_reemc_door'
         launch_file = 'reemc_door.launch'
         
-        cli_args = ['pkg1', 'file1.launch', 'door:=simple', 'direction:=pull', 'gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"']
+        cli_args = ['pkg1', 'file1.launch', 'door:=simple', 'direction:=pull']
         roslaunch_args = cli_args[2:]
 
 
