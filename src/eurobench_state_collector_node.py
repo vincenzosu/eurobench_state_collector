@@ -19,6 +19,7 @@ from madrob_srvs.srv import *
 from madrob_msgs.msg import Passage
 from eurobench_bms_msgs_and_srvs.srv import *
 
+import roslaunch
 import numpy as np
 
 
@@ -285,23 +286,20 @@ def listener(self):
 #    print ("listener 4")
 
 def getDoorAperture(): 
-
     try:
         get_model_properties = rospy.ServiceProxy('/gazebo/get_model_properties', GetModelProperties)
     except rospy.ServiceException, e:
         print "ServiceProxy failed: %s"%e
         exit(0)
     model_prop = get_model_properties("door_simple")
-
     try:
         get_door_joint_props = rospy.ServiceProxy('/gazebo/get_joint_properties', GetJointProperties)
     except rospy.ServiceException, e:
         print "ServiceProxy failed: %s"%e
         exit(0)
-
-    print('---------- door aperture ---------')
+    if VERBOSE: print('---------- door aperture ---------')
     joint_prop = get_door_joint_props('joint_frame_door')
-    print(joint_prop.position[0])
+    if VERBOSE: print(joint_prop.position[0])
    
     return joint_prop.position[0]
 
@@ -319,13 +317,12 @@ def getHandlePosition():
         print "ServiceProxy failed: %s"%e
         exit(0)
     joint_prop_handle = get_door_joint_props('joint_door_lever')
-    print('---------- handle position ---------')
-    print(joint_prop_handle.position[0])
+    if VERBOSE: print('---------- handle position ---------')
+    if VERBOSE: print(joint_prop_handle.position[0])
     return joint_prop_handle.position[0]
 
 
-def retrieveBenchmarkConfiguration(ebws):
-    # Based on the currently selected benchmark type
+def retrieveBenchmarkConfiguration(ebws):    # Based on the currently selected benchmark type
     try:
         get_benchmark_params = rospy.ServiceProxy('madrob/gui/benchmark_params', MadrobBenchmarkParams)
     except rospy.ServiceException, e:
@@ -333,14 +330,11 @@ def retrieveBenchmarkConfiguration(ebws):
         exit(0)
     response = get_benchmark_params()
     ebws.current_benchmark_name = response.benchmark_type
-    #print (ebws.current_benchmark_name)
-#    ebws.current_benchmark_type = ebws.config[ebws.current_benchmark_name]
     ebws.current_door_opening_side = response.door_opening_side
-    #print(ebws.current_door_opening_side)
     ebws.current_robot_approach_side = response.robot_approach_side
     if VERBOSE:
         print [ebws.current_benchmark_name , ebws.current_door_opening_side , ebws.current_robot_approach_side]
-#    return [ebws.current_benchmark_name , ebws.current_door_opening_side , ebws.current_robot_approach_side]
+
 
 def benchmarkConfigurationHasChanged(ebws):
     if (ebws.current_benchmark_name != ebws.old_benchmark_name 
@@ -351,13 +345,15 @@ def benchmarkConfigurationHasChanged(ebws):
         ebws.old_robot_approach_side = ebws.current_robot_approach_side
         if VERBOSE: 
             print("PARAMETERS ARE CHANGED")
-
+            
         return True;
     return False;
          
     
 def restartSim():
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
+    command
+    
 
 def main(args):
      ebws =  eurobench_state_collector()
