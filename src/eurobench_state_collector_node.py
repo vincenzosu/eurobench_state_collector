@@ -20,6 +20,8 @@ from madrob_msgs.msg import Passage
 from eurobench_bms_msgs_and_srvs.srv import *
 
 import roslaunch
+import subprocess
+
 import numpy as np
 
 
