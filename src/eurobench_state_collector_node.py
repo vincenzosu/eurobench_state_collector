@@ -154,6 +154,7 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
     def startSim(self):
+        '''
         package = 'eurobench_reemc_door'
         launch_file = 'reemc_door.launch'
         
@@ -165,6 +166,16 @@ class eurobench_state_collector:
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
         self.launch.start()
+        '''
+        print launch_file
+        cli_args = ['/home/mosaic/catkin_ws/src/robot/launch/id.launch','gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"']
+        roslaunch_args = cli_args[1:]
+        roslaunch_file = [(roslaunch.rlutil.resolve_launch_arguments(cli_args)[0], roslaunch_args)]
+        parent = roslaunch.parent.ROSLaunchParent(uuid, roslaunch_file)
+        parent.start()
+        
+        
+        
 
     def are_ranges_complete(self, ranges):
         for single_range in ranges:
