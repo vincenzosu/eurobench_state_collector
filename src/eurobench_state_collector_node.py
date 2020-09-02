@@ -254,7 +254,7 @@ def talker(ebws):
 
         retrieveBenchmarkConfiguration(ebws)
         if (benchmarkConfigurationHasChanged(ebws)):
-        #    restartSim()
+            restartSim()
 
         r.sleep()
 
@@ -342,7 +342,12 @@ def retrieveBenchmarkConfiguration(ebws):
         print [ebws.current_benchmark_name , ebws.current_door_opening_side , ebws.current_robot_approach_side]
 #    return [ebws.current_benchmark_name , ebws.current_door_opening_side , ebws.current_robot_approach_side]
 
+def benchmarkConfigurationHasChanged(ebws):
+    if VERBOSE: 
+        print("PARAMETERS ARE CHANGED")
 
+def restartSim():
+    print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
 
 def main(args):
      ebws =  eurobench_state_collector()
