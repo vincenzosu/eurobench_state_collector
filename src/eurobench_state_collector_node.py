@@ -142,10 +142,10 @@ class eurobench_state_collector:
          # self.ee_pose = rospy.Subscriber("geometry_msgs/Twist", Twist,
          #                                      self.ee_pose_callback, queue_size=1)
 
-        if VERBOSE:
-             print ("subcribed on joint states")
-        self.ee_pose = rospy.Subscriber("sensor_msgs/JointState", Twist,
-                                             self.ee_pose_callback, queue_size=1)
+#        if VERBOSE:
+#             print ("subcribed on joint states")
+#        self.ee_pose = rospy.Subscriber("sensor_msgs/JointState", Twist,
+#                                             self.ee_pose_callback, queue_size=1)
 
 
         if VERBOSE:
