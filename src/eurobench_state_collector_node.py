@@ -167,6 +167,11 @@ class eurobench_state_collector:
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
         self.launch.start()
         '''
+        package = 'eurobench_reemc_door'
+        launch_file = 'reemc_door.launch'
+        
+        launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
+        
         print launch_file
         cli_args = ['/home/mosaic/catkin_ws/src/robot/launch/id.launch','gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"']
         roslaunch_args = cli_args[1:]
