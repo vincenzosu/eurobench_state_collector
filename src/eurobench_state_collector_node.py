@@ -45,6 +45,10 @@ class eurobench_state_collector:
         self.old_door_opening_side = None
         self.old_robot_approach_side = None
         
+        # ############### GAZEBO init ############
+        self.package = 'eurobench_reemc_door'
+        self.executable = 'rqt_gui'
+        
 
         # ################### where i am goung to publish ##################
           
@@ -130,10 +134,10 @@ class eurobench_state_collector:
              print ("subcribed on sensor_msgs.Image")
 
 
-        self.ee_pose_wrt_com = rospy.Subscriber("ground_truth_odom", Twist,
-                                             self.com_pose_callback, queue_size=1)
-        if VERBOSE:
-             print ("subcribed on groud truth odom")
+#        self.ee_pose_wrt_com = rospy.Subscriber("ground_truth_odom", Twist,
+#                                             self.com_pose_callback, queue_size=1)
+#        if VERBOSE:
+#             print ("subcribed on groud truth odom")
 
          # self.ee_pose = rospy.Subscriber("geometry_msgs/Twist", Twist,
          #                                      self.ee_pose_callback, queue_size=1)
@@ -212,13 +216,13 @@ class eurobench_state_collector:
     def com_pose_callback(self, ros_data):
         msg = EurobenchWorldState()
      #     msg.com_pose.linear =   #qui ci metto graound truth odom!! (pose and angle)
-    def ee_pose_callback(self, ros_data):
-        msg = EurobenchWorldState()
+#    def ee_pose_callback(self, ros_data):
+#        msg = EurobenchWorldState()
 
-        msg.ee_pose_wrt_com.linear.x = 1.0
-        msg.ee_pose_wrt_com.linear.y = 1.0
-        msg.ee_pose_wrt_com.linear.x = 1.0
-        self.eb_ws_pub.publish(msg)
+#        msg.ee_pose_wrt_com.linear.x = 1.0
+#        msg.ee_pose_wrt_com.linear.y = 1.0
+#        msg.ee_pose_wrt_com.linear.x = 1.0
+#        self.eb_ws_pub.publish(msg)
 
     def image_callback(self, ros_data):
         if VERBOSE :
@@ -338,8 +342,8 @@ def retrieveBenchmarkConfiguration(ebws):    # Based on the currently selected b
 
 def benchmarkConfigurationHasChanged(ebws):
     if (ebws.current_benchmark_name != ebws.old_benchmark_name 
-        or ebws.current_door_opening_side != ebws.old_door_opening_side
-        or ebws.current_robot_approach_side != ebws.old_robot_approach_side):
+    or ebws.current_door_opening_side != ebws.old_door_opening_side
+    or ebws.current_robot_approach_side != ebws.old_robot_approach_side):
         ebws.old_benchmark_name = ebws.current_benchmark_name
         ebws.old_door_opening_side = ebws.current_door_opening_side
         ebws.old_robot_approach_side = ebws.current_robot_approach_side
@@ -352,7 +356,7 @@ def benchmarkConfigurationHasChanged(ebws):
     
 def restartSim():
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
-    command
+#    command
     
 
 def main(args):
