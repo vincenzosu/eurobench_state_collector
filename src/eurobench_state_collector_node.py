@@ -155,6 +155,7 @@ class eurobench_state_collector:
 
     def startSim(self):
         '''
+        #door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"
         package = 'eurobench_reemc_door'
         launch_file = 'reemc_door.launch'
         
@@ -173,7 +174,7 @@ class eurobench_state_collector:
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
         
         print launch_file
-        cli_args = [launch_file,'gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"']
+        cli_args = [launch_file,'door:=simple']
         roslaunch_args = cli_args[1:]
         uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch_file = [(roslaunch.rlutil.resolve_launch_arguments(cli_args)[0], roslaunch_args)]
