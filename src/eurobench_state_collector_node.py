@@ -255,8 +255,8 @@ def talker(ebws):
         ebws.door_handle_pub.publish(msg_handle)
 
         retrieveBenchmarkConfiguration(ebws)
-        if (benchmarkConfigurationHasChanged(ebws)):
-            restartSim()
+        #if (benchmarkConfigurationHasChanged(ebws)):
+        #    restartSim()
 
         r.sleep()
 
@@ -332,7 +332,7 @@ def getHandlePosition():
 
 
   # DA QUI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++        
-    def retrieveBenchmarkConfiguration(self, ebws):
+    def retrieveBenchmarkConfiguration(ebws):
         # Based on the currently selected benchmark type
         get_benchmark_params = rospy.ServiceProxy('madrob/gui/benchmark_params', MadrobBenchmarkParams)
         response = get_benchmark_params()
