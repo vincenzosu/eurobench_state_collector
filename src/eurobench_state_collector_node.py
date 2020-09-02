@@ -17,6 +17,8 @@ from gazebo_msgs.srv import GetModelProperties
 from gazebo_msgs.srv import GetJointProperties
 from madrob_srvs.srv import *
 from madrob_msgs.msg import Passage
+from eurobench_bms_msgs_and_srvs.srv import *
+
 import numpy as np
 
 
@@ -29,46 +31,35 @@ VERBOSE=True
 class eurobench_state_collector:
     def __init__(self):
 
-        #self.sensor_readings = {}
-#        self.cw_left = np.array([0, 0, 0, 0]) 
-        self.cw_left =  np.array([None, None, None, None])
-#        self.cw_right = np.array([0, 0, 0, 0]) 
-#        self.cw_right = [None]*4
-        self.cw_right = np.array([None, None, None, None])
-
-#        self.ccw_left = np.array([0, 0, 0, 0]) 
-        self.ccw_left =  np.array([None, None, None, None])
-#        self.ccw_right = np.array([0, 0, 0, 0]) 
+        self.cw_left = np.array([None, None, None, None])
+        self.cw_right = np.array([None, None, None, None]) 
+        self.ccw_left = np.array([None, None, None, None])
         self.ccw_right = np.array([None, None, None, None])
 
 
-          # ################### where i am goung to publish ##################
+        # ################### where i am goung to publish ##################
           
-          #self.eb_ws_pub = rospy.Publisher('eurobench_state_collector',
-          #                                 EurobenchWorldState, queue_size=1)
+        #self.eb_ws_pub = rospy.Publisher('eurobench_state_collector',
+        #                                 EurobenchWorldState, queue_size=1)
+        
         self.door_pub = rospy.Publisher('/madrob/preprocessed_data/passage/door',
                                            Float64, queue_size=1)
-
+                                           
         self.door_handle_pub = rospy.Publisher('/madrob/preprocessed_data/passage/handle',
                                            Float64, queue_size=1)
                                            
         self.cw_left_pub = rospy.Publisher('/madrob/passage/cw_left',
                                         Passage, queue_size=1)                             
-
         self.cw_right_pub = rospy.Publisher('/madrob/passage/cw_right',
                                         Passage, queue_size=1)        
-                                           
         self.ccw_left_pub = rospy.Publisher('/madrob/passage/ccw_left', 
                                         Passage, queue_size=1)                             
-
         self.ccw_right_pub =rospy.Publisher('/madrob/passage/ccw_right',
                                         Passage, queue_size=1)                             
- 
-                     
-          
-          
+                   
 
-          # ################## where i am going to be subscribed #############
+        # ################## where i am going to be subscribed #############
+        
         self.distance_sens_front_0 = rospy.Subscriber("/sensor/base_ir_front_0", Range,
           									   self.cw_left_callback, queue_size=1)
           
@@ -229,8 +220,76 @@ class eurobench_state_collector:
         msg.com_pose.linear.y = 1.0
         msg.com_pose.linear.x = 1.0
         self.eb_ws_pub.publish(msg)
-          
-     
+        
+        
+  # DA QUI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++        
+     def retrieveBenchmarkConfiguration(ebws):
+        # Based on the currently selected benchmark type
+        get_benchmark_params = rospy.ServiceProxy('madrob/gui/benchmark_params', MadrobBenchmarkParams)
+        response = get_benchmark_params()
+        ebws.current_benchmark_name = response.benchmark_type
+        ebws.current_benchmark_type = self.config[self.current_benchmark_name]
+
+        ebws.door_opening_side = response.door_opening_side
+        ebws.robot_approach_side = response.robot_approach_side
+'''
+        # Set door controller mode
+        door_node_name = rospy.get_param('testbed_nodes')['door']
+
+        set_mode_service_name = '/' + door_node_name + '/set_mode'
+        try:
+            rospy.wait_for_service(set_mode_service_name, timeout=5.0)
+        except rospy.ROSException:
+            rospy.logerr(set_mode_service_name + ' service unavailable.')
+            self.stop_benchmark()
+
+        set_door_mode = rospy.ServiceProxy(set_mode_service_name, SetDoorControllerMode)
+
+        door_mode_request = SetDoorControllerModeRequest()
+        if self.current_benchmark_type['brake_enabled']:
+            door_mode_request.mode = SetDoorControllerModeRequest.MODE_LUT
+        else:
+            door_mode_request.mode = SetDoorControllerModeRequest.MODE_DISABLED
+        door_mode_response = set_door_mode(door_mode_request)
+
+        if door_mode_response.success:
+            rospy.loginfo('Door controller mode successfully set')
+        else:
+            rospy.logerr('Error setting door controller mode: %s' % (door_mode_response.message))
+        
+        # lutCCW has reverse order
+        lut = self.current_benchmark_type['lut']
+        lutCCW = list(reversed(self.current_benchmark_type['lut']))
+
+        # Set door controller LUT
+        set_door_lut = rospy.ServiceProxy('/' + door_node_name + '/set_lut', SetDoorControllerLUT)
+
+        if self.current_benchmark_type['brake_enabled']:
+            cw_door_lut_request = SetDoorControllerLUTRequest()
+            cw_door_lut_request.type = SetDoorControllerLUTRequest.ANGLE_CW
+            cw_door_lut_request.values = lut
+            cw_door_lut_response = set_door_lut(cw_door_lut_request)
+            if cw_door_lut_response.success:
+                rospy.loginfo('CW door LUT successfully set')
+            else:
+                rospy.logerr('Error setting CW door LUT: %s' % (cw_door_lut_response.message))
+
+            ccw_door_lut_request = SetDoorControllerLUTRequest()
+            ccw_door_lut_request.type = SetDoorControllerLUTRequest.ANGLE_CCW
+            ccw_door_lut_request.values = lutCCW
+            ccw_door_lut_response = set_door_lut(ccw_door_lut_request)
+            if ccw_door_lut_response.success:
+                rospy.loginfo('CCW door LUT successfully set')
+            else:
+                rospy.logerr('Error setting CCW door LUT: %s' % (ccw_door_lut_response.message))
+    '''
+    def benchmarkConfigurationHasChanged(ebws):
+        if (ebws.current_benchmark_name ) ebws.current_benchmark_type ebws.current_door_opening_side ebws.current_robot_approach_side
+        (ebws.old_benchmark_name ) ebws.old_benchmark_type ebws.old_door_opening_side ebws.old_robot_approach_side
+            
+    def restartSim():
+        
+  # A QUI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++        
 
 
 def talker(ebws):
@@ -261,6 +320,10 @@ def talker(ebws):
 
         msg_handle = getHandlePosition()
         ebws.door_handle_pub.publish(msg_handle)
+
+        retrieveBenchmarkConfiguration(ebws)
+        if (benchmarkConfigurationHasChanged(ebws)):
+            restartSim()
 
         r.sleep()
 
