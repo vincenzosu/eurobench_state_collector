@@ -45,7 +45,7 @@ class eurobench_state_collector:
         self.old_door_opening_side = None
         self.old_robot_approach_side = None
         
-        startSim()
+        self.startSim()
         
         # ################### where i am goung to publish ##################
           
