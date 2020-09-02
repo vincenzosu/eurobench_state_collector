@@ -45,6 +45,8 @@ class eurobench_state_collector:
         self.old_door_opening_side = None
         self.old_robot_approach_side = None
         
+        startSim()
+        
         # ################### where i am goung to publish ##################
           
         #self.eb_ws_pub = rospy.Publisher('eurobench_state_collector',
@@ -148,6 +150,13 @@ class eurobench_state_collector:
              # pykdl_utils setup
           #compute_forward_kinematics()
 
+    def startSim(self):
+        package = 'eurobench_reemc_door'
+        executable = 'reemc_door.launch'
+        node = roslaunch.core.Node(package, executable)
+        launch = roslaunch.scriptapi.ROSLaunch()    
+        launch.start()
+        process = launch.launch(node)
 
     def are_ranges_complete(self, ranges):
         for single_range in ranges:
