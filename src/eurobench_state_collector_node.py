@@ -332,74 +332,74 @@ def getHandlePosition():
 
 
   # DA QUI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++        
-    def retrieveBenchmarkConfiguration(ebws):
-        # Based on the currently selected benchmark type
-        get_benchmark_params = rospy.ServiceProxy('madrob/gui/benchmark_params', MadrobBenchmarkParams)
-        response = get_benchmark_params()
-        ebws.current_benchmark_name = response.benchmark_type
-        ebws.current_benchmark_type = self.config[self.current_benchmark_name]
+def retrieveBenchmarkConfiguration(ebws):
+    # Based on the currently selected benchmark type
+    get_benchmark_params = rospy.ServiceProxy('madrob/gui/benchmark_params', MadrobBenchmarkParams)
+    response = get_benchmark_params()
+    ebws.current_benchmark_name = response.benchmark_type
+    ebws.current_benchmark_type = self.config[self.current_benchmark_name]
 
-        ebws.door_opening_side = response.door_opening_side
-        ebws.robot_approach_side = response.robot_approach_side
+    ebws.door_opening_side = response.door_opening_side
+    ebws.robot_approach_side = response.robot_approach_side
 '''
-        # Set door controller mode
-        door_node_name = rospy.get_param('testbed_nodes')['door']
+    # Set door controller mode
+    door_node_name = rospy.get_param('testbed_nodes')['door']
 
-        set_mode_service_name = '/' + door_node_name + '/set_mode'
-        try:
-            rospy.wait_for_service(set_mode_service_name, timeout=5.0)
-        except rospy.ROSException:
-            rospy.logerr(set_mode_service_name + ' service unavailable.')
-            self.stop_benchmark()
+    set_mode_service_name = '/' + door_node_name + '/set_mode'
+    try:
+        rospy.wait_for_service(set_mode_service_name, timeout=5.0)
+    except rospy.ROSException:
+        rospy.logerr(set_mode_service_name + ' service unavailable.')
+        self.stop_benchmark()
 
-        set_door_mode = rospy.ServiceProxy(set_mode_service_name, SetDoorControllerMode)
+    set_door_mode = rospy.ServiceProxy(set_mode_service_name, SetDoorControllerMode)
 
-        door_mode_request = SetDoorControllerModeRequest()
-        if self.current_benchmark_type['brake_enabled']:
-            door_mode_request.mode = SetDoorControllerModeRequest.MODE_LUT
+    door_mode_request = SetDoorControllerModeRequest()
+    if self.current_benchmark_type['brake_enabled']:
+        door_mode_request.mode = SetDoorControllerModeRequest.MODE_LUT
+    else:
+        door_mode_request.mode = SetDoorControllerModeRequest.MODE_DISABLED
+    door_mode_response = set_door_mode(door_mode_request)
+
+    if door_mode_response.success:
+        rospy.loginfo('Door controller mode successfully set')
+    else:
+        rospy.logerr('Error setting door controller mode: %s' % (door_mode_response.message))
+    
+    # lutCCW has reverse order
+    lut = self.current_benchmark_type['lut']
+    lutCCW = list(reversed(self.current_benchmark_type['lut']))
+
+    # Set door controller LUT
+    set_door_lut = rospy.ServiceProxy('/' + door_node_name + '/set_lut', SetDoorControllerLUT)
+
+    if self.current_benchmark_type['brake_enabled']:
+        cw_door_lut_request = SetDoorControllerLUTRequest()
+        cw_door_lut_request.type = SetDoorControllerLUTRequest.ANGLE_CW
+        cw_door_lut_request.values = lut
+        cw_door_lut_response = set_door_lut(cw_door_lut_request)
+        if cw_door_lut_response.success:
+            rospy.loginfo('CW door LUT successfully set')
         else:
-            door_mode_request.mode = SetDoorControllerModeRequest.MODE_DISABLED
-        door_mode_response = set_door_mode(door_mode_request)
+            rospy.logerr('Error setting CW door LUT: %s' % (cw_door_lut_response.message))
 
-        if door_mode_response.success:
-            rospy.loginfo('Door controller mode successfully set')
+        ccw_door_lut_request = SetDoorControllerLUTRequest()
+        ccw_door_lut_request.type = SetDoorControllerLUTRequest.ANGLE_CCW
+        ccw_door_lut_request.values = lutCCW
+        ccw_door_lut_response = set_door_lut(ccw_door_lut_request)
+        if ccw_door_lut_response.success:
+            rospy.loginfo('CCW door LUT successfully set')
         else:
-            rospy.logerr('Error setting door controller mode: %s' % (door_mode_response.message))
+            rospy.logerr('Error setting CCW door LUT: %s' % (ccw_door_lut_response.message))
+'''
+'''
+def benchmarkConfigurationHasChanged(ebws):
+    if (ebws.current_benchmark_name ) ebws.current_benchmark_type ebws.current_door_opening_side ebws.current_robot_approach_side
+    (ebws.old_benchmark_name ) ebws.old_benchmark_type ebws.old_door_opening_side ebws.old_robot_approach_side
         
-        # lutCCW has reverse order
-        lut = self.current_benchmark_type['lut']
-        lutCCW = list(reversed(self.current_benchmark_type['lut']))
-
-        # Set door controller LUT
-        set_door_lut = rospy.ServiceProxy('/' + door_node_name + '/set_lut', SetDoorControllerLUT)
-
-        if self.current_benchmark_type['brake_enabled']:
-            cw_door_lut_request = SetDoorControllerLUTRequest()
-            cw_door_lut_request.type = SetDoorControllerLUTRequest.ANGLE_CW
-            cw_door_lut_request.values = lut
-            cw_door_lut_response = set_door_lut(cw_door_lut_request)
-            if cw_door_lut_response.success:
-                rospy.loginfo('CW door LUT successfully set')
-            else:
-                rospy.logerr('Error setting CW door LUT: %s' % (cw_door_lut_response.message))
-
-            ccw_door_lut_request = SetDoorControllerLUTRequest()
-            ccw_door_lut_request.type = SetDoorControllerLUTRequest.ANGLE_CCW
-            ccw_door_lut_request.values = lutCCW
-            ccw_door_lut_response = set_door_lut(ccw_door_lut_request)
-            if ccw_door_lut_response.success:
-                rospy.loginfo('CCW door LUT successfully set')
-            else:
-                rospy.logerr('Error setting CCW door LUT: %s' % (ccw_door_lut_response.message))
+def restartSim():
     '''
-'''
-    def benchmarkConfigurationHasChanged(ebws):
-        if (ebws.current_benchmark_name ) ebws.current_benchmark_type ebws.current_door_opening_side ebws.current_robot_approach_side
-        (ebws.old_benchmark_name ) ebws.old_benchmark_type ebws.old_door_opening_side ebws.old_robot_approach_side
-            
-    def restartSim():
-        '''
-  # A QUI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
+# A QUI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  
 
 
 def main(args):
