@@ -154,39 +154,13 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
     def startSim(self):
-        '''
-        package = 'eurobench_reemc_door'
-        executable = 'reemc_door.launch'
-        node = roslaunch.core.Node(package, executable)
-        launch = roslaunch.scriptapi.ROSLaunch()    
-        launch.start()
-        process = launch.launch(node) '''
-        
-        
-        ''' this work
-        package = 'eurobench_reemc_door'
-        launch_file = 'reemc_door.launch'
-
-        command = "QT_X11_NO_MITSHM=1 roslaunch  {0} {1}".format(package, launch_file)
-
-        self.p = subprocess.Popen(command, shell=True)
-
-        state = p.poll()
-        if state is None:
-            rospy.loginfo("process is running fine")
-        elif state < 0:
-            rospy.loginfo("Process terminated with error")
-        elif state > 0:
-            rospy.loginfo("Process terminated without error")
-        '''
-        
         package = 'eurobench_reemc_door'
         launch_file = 'reemc_door.launch'
         
         uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch.configure_logging(uuid)
         
-        roslaunch.core.Node(package, launch_file, args='door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"')
+        roslaunch.core.Node(package, launch_file, args='door:=simple direction:=pull gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"')
                  
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
@@ -277,10 +251,6 @@ class eurobench_state_collector:
 
 
 def talker(ebws):
-#     pub = rospy.Publisher('eurobench_state_collector', EurobenchWorldState, queue_size=1)
-     #ebws.
-#     self.door_pub = rospy.Publisher('/madrob/preprocessed_data/passage/door',
-#                                           Float64, queue_size=1)
     if VERBOSE:
         print ("subcribed on sensor_distances")
 
@@ -398,29 +368,6 @@ def restartSim(ebws):
 
     
 
-#    package = 'eurobench_reemc_door'
-        
-        #QT_X11_NO_MITSHM=1 roslaunch eurobench_reemc_door reemc_door.launch door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"
-        
-#    executable = 'reemc_door.launch'
-    #executable = 'reemc_door.launch door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"'
-    
-    #executable = 'rqt_gui'
-#    node = roslaunch.core.Node(package, executable)
-
-#    launch = roslaunch.scriptapi.ROSLaunch()
-#    launch.start()
-
-#    process = launch.launch(node)
-#    print process.is_alive()
-#    process.stop()
-
-   # ebws.p.stdin.close()
-
-        
-    
-#    command
-    
 
 def main(args):
      ebws =  eurobench_state_collector()
