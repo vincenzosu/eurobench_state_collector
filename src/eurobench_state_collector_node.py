@@ -394,7 +394,7 @@ def benchmarkConfigurationHasChanged(ebws):
     
 def restartSim(ebws):
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
-    ebws.launch.shutdown()
+    #ebws.launch.shutdown()
 
     
 
