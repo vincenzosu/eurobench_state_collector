@@ -160,13 +160,12 @@ class eurobench_state_collector:
         launch = roslaunch.scriptapi.ROSLaunch()    
         launch.start()
         process = launch.launch(node) '''
+        
         package = 'eurobench_reemc_door'
         launch_file = 'reemc_door.launch'
-
-        command = "roslaunch  {0} {1}".format(package, launch_file)
-
+#        command = "roslaunch  {0} {1}".format(package, launch_file)
+        command = "QT_X11_NO_MITSHM=1 roslaunch  {0} {1}".format(package, launch_file)        
         p = subprocess.Popen(command, shell=True)
-
         state = p.poll()
         if state is None:
             rospy.loginfo("process is running fine")
