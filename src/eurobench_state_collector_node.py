@@ -45,11 +45,6 @@ class eurobench_state_collector:
         self.old_door_opening_side = None
         self.old_robot_approach_side = None
         
-        # ############### GAZEBO init ############
-        self.package = 'eurobench_reemc_door'
-        self.executable = 'rqt_gui'
-        
-
         # ################### where i am goung to publish ##################
           
         #self.eb_ws_pub = rospy.Publisher('eurobench_state_collector',
@@ -356,6 +351,24 @@ def benchmarkConfigurationHasChanged(ebws):
     
 def restartSim():
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
+    package = 'eurobench_reemc_door'
+        
+        #QT_X11_NO_MITSHM=1 roslaunch eurobench_reemc_door reemc_door.launch door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"
+        
+    executable = 'reemc_door.launch'
+    #executable = 'reemc_door.launch door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"'
+    
+    #executable = 'rqt_gui'
+    node = roslaunch.core.Node(package, executable)
+
+    launch = roslaunch.scriptapi.ROSLaunch()
+    launch.start()
+
+    process = launch.launch(node)
+    print process.is_alive()
+    process.stop()
+        
+    
 #    command
     
 
