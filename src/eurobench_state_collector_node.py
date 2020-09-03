@@ -390,7 +390,13 @@ def benchmarkConfigurationHasChanged(ebws):
     
 def restartSim(ebws):
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
-    #ebws.launch.shutdown()
+    ebws.launch.shutdown()
+    arg0 = ebws.current_benchmark_name
+    arg1 = "direction:=pull" if ebws.current_door_opening_side == "CW" else "direction:=push"
+    arg2 = "side1" if ebws.current_robot_approach_side == "CW" else "side2"
+    sys.argv = [ 'door:=simple', arg1]
+    self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
+    self.launch.start()
 
     
 
