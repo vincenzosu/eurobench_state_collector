@@ -19,7 +19,7 @@ from madrob_srvs.srv import *
 from madrob_msgs.msg import Passage
 from eurobench_bms_msgs_and_srvs.srv import *
 
-import roslaunch
+#import roslaunch
 import subprocess
 import rospkg
 import os
@@ -159,16 +159,21 @@ class eurobench_state_collector:
         package = 'eurobench_reemc_door'
         launch_file = 'reemc_door.launch'
         
-        uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
-        roslaunch.configure_logging(uuid)
+        #uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
+        #roslaunch.configure_logging(uuid)
         
         #roslaunch.core.Node(package, launch_file, args='door:=simple direction:=pull gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"')
                  
-        launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-        sys.argv = [ 'door:=self_closing', 'direction:=push']
+        #launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
+        #sys.argv = [ 'door:=self_closing', 'direction:=push']
+        
+        sys.argv = ['roslaunch', 'eurobench_reemc_door', 'reemc_door.launch', 'direction:=pull', 'gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"']
+        import roslaunch
+        roslaunch.main()
 
-        self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
-        self.launch.start()
+
+        #self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
+        #self.launch.start()
         # https://answers.ros.org/question/42849/how-to-launch-a-launch-file-from-python-code/
         # http://wiki.ros.org/roslaunch/API%20Usage
         # https://answers.ros.org/question/237109/passing-arguments-to-launch-file-from-python-api/
