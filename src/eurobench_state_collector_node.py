@@ -167,7 +167,7 @@ class eurobench_state_collector:
         #launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
         #sys.argv = [ 'door:=self_closing', 'direction:=push']
         
-        sys.argv = ['roslaunch', 'eurobench_reemc_door', 'reemc_door.launch', 'direction:=pull']
+        sys.argv = ['roslaunch', 'eurobench_reemc_door', 'reemc_door.launch', 'door:=simple', 'direction:=pull']
         import roslaunch
         roslaunch.main()
 
