@@ -165,7 +165,7 @@ class eurobench_state_collector:
         #roslaunch.core.Node(package, launch_file, args='door:=simple direction:=pull gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"')
                  
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-        sys.argv = ['roslaunch', package, launch_file, 'door:=simple', 'direction:=pull', 'gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"']
+        sys.argv = [ 'door:=simple', 'direction:=pull', 'gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"']
 
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
         self.launch.start()
