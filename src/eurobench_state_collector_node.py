@@ -292,8 +292,8 @@ def talker(ebws):
         ebws.door_handle_pub.publish(msg_handle)
 
         retrieveBenchmarkConfiguration(ebws)
-        if (benchmarkConfigurationHasChanged(ebws)):
-            if(ebws.current_door_opening_side != None): 
+        if benchmarkConfigurationHasChanged(ebws):
+            ifebws.current_door_opening_side !=is not None: 
                 restartSim(ebws)
 
         r.sleep()
