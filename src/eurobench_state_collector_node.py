@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 
 import rospy
+import roslaunch
+import rospkg
+import os
+import sys
+import numpy as np
+
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import Range
-from sensor_msgs.msg import JointState
-#from ground_truth_odom.msg import *
 from geometry_msgs.msg import Twist
-#from eurobench_worldstate_provider.msg import EurobenchWorldState
 from urdf_parser_py.urdf import URDF
 from std_msgs.msg import Float64
-#from pykdl_utils.kdl_parser import kdl_tree_from_urdf_model
-#from pykdl_utils.kdl_kinematics import KDLKinematics
 from eurobench_state_collector.srv import MadrobDoorDummy
 from gazebo_msgs.srv import GetModelState
 from gazebo_msgs.srv import GetModelProperties
@@ -19,15 +20,8 @@ from madrob_srvs.srv import *
 from madrob_msgs.msg import Passage
 from eurobench_bms_msgs_and_srvs.srv import *
 
-import roslaunch
-import subprocess
-import rospkg
-import os
-import numpy as np
 
 
-
-import sys
 
 VERBOSE=True
 #VERBOSE=False
@@ -134,20 +128,6 @@ class eurobench_state_collector:
              print ("subcribed on sensor_msgs.Image")
 
 
-#        self.ee_pose_wrt_com = rospy.Subscriber("ground_truth_odom", Twist,
-#                                             self.com_pose_callback, queue_size=1)
-#        if VERBOSE:
-#             print ("subcribed on groud truth odom")
-
-         # self.ee_pose = rospy.Subscriber("geometry_msgs/Twist", Twist,
-         #                                      self.ee_pose_callback, queue_size=1)
-
-#        if VERBOSE:
-#             print ("subcribed on joint states")
-#        self.ee_pose = rospy.Subscriber("sensor_msgs/JointState", Twist,
-#                                             self.ee_pose_callback, queue_size=1)
-
-
         if VERBOSE:
              print ("setup of the kdl kinematics")
              # pykdl_utils setup
@@ -244,23 +224,7 @@ class eurobench_state_collector:
         chain = tree.getChain( 'arm_right_1_joint', 'arm_right_7_joint')
         print (chain.getNrOfJoints())
 
-     #     robot = URDF.from_parameter_server()
-      #    tree = kdl_tree_from_urdf_model(robot)
-      #    print (tree.getNrOfSegments())
-      #    chain = tree.getChain( 'arm_right_7_joint', 'arm_right_1_joint')
-      #    print (chain.getNrOfJoints())
-
-
-    def com_pose_callback(self, ros_data):
-        msg = EurobenchWorldState()
-     #     msg.com_pose.linear =   #qui ci metto graound truth odom!! (pose and angle)
-#    def ee_pose_callback(self, ros_data):
-#        msg = EurobenchWorldState()
-
-#        msg.ee_pose_wrt_com.linear.x = 1.0
-#        msg.ee_pose_wrt_com.linear.y = 1.0
-#        msg.ee_pose_wrt_com.linear.x = 1.0
-#        self.eb_ws_pub.publish(msg)
+ 
 
     def image_callback(self, ros_data):
         if VERBOSE :
