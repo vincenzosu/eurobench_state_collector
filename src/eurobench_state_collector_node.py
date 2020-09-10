@@ -42,7 +42,7 @@ class eurobench_state_collector:
         self.old_door_opening_side = None
         self.old_robot_approach_side = None
         
-        #self.startSim()
+        self.startSim()
         
         # ################### where i am goung to publish ##################
           
@@ -253,9 +253,9 @@ def talker(ebws):
         ebws.door_handle_pub.publish(msg_handle)
 
         retrieveBenchmarkConfiguration(ebws)
-        #if benchmarkConfigurationHasChanged(ebws):
-        #    if ebws.current_door_opening_side is not None: 
-        #        restartSim(ebws)
+        if benchmarkConfigurationHasChanged(ebws):
+            if ebws.current_door_opening_side is not None: 
+                restartSim(ebws)
 
         r.sleep()
 
