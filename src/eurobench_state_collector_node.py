@@ -42,7 +42,7 @@ class eurobench_state_collector:
         self.old_door_opening_side = None
         self.old_robot_approach_side = None
         
-        self.startSim()
+        #self.startSim()
         
         # ################### where i am goung to publish ##################
           
@@ -142,12 +142,9 @@ class eurobench_state_collector:
         uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
         roslaunch.configure_logging(uuid)
         
-        #roslaunch.core.Node(package, launch_file, args='door:=simple direction:=pull gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"')
-                 
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
         sys.argv = [ 'door:=wind', 'direction:=push']
         
-
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
         self.launch.start()
         # https://answers.ros.org/question/42849/how-to-launch-a-launch-file-from-python-code/
@@ -256,9 +253,9 @@ def talker(ebws):
         ebws.door_handle_pub.publish(msg_handle)
 
         retrieveBenchmarkConfiguration(ebws)
-        if benchmarkConfigurationHasChanged(ebws):
-            if ebws.current_door_opening_side is not None: 
-                restartSim(ebws)
+        #if benchmarkConfigurationHasChanged(ebws):
+        #    if ebws.current_door_opening_side is not None: 
+        #        restartSim(ebws)
 
         r.sleep()
 
