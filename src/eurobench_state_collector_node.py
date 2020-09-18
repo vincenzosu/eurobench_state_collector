@@ -143,7 +143,7 @@ class eurobench_state_collector:
         roslaunch.configure_logging(uuid)
         
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-        sys.argv = [ 'door:=wind', 'direction:=push']
+        sys.argv = [ 'door:=wind', 'direction:=push', 'robot_placement_cw:=false']
         
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
         self.launch.start()
@@ -355,7 +355,7 @@ def restartSim(ebws):
     ebws.launch.shutdown()
     arg0 = ebws.current_benchmark_name
     arg1 = "direction:=pull" if ebws.current_door_opening_side == "CW" else "direction:=push"
-    arg2 = "side1" if ebws.current_robot_approach_side == "CW" else "side2"
+    arg2 = "robot_placement_cw:=true" if ebws.current_robot_approach_side == "CW" else "robot_placement_cw:=false"
     
     package = 'eurobench_reemc_door'
     launch_file = 'reemc_door.launch'
@@ -363,7 +363,7 @@ def restartSim(ebws):
     roslaunch.configure_logging(uuid)
 #roslaunch.core.Node(package, launch_file, args='door:=simple direction:=pull gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"')                 
     launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-    sys.argv = [ 'door:=simple', arg1]
+    sys.argv = [ 'door:=simple', arg1, arg2]
     ebws.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
     ebws.launch.start()
 
