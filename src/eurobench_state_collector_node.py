@@ -354,8 +354,8 @@ def restartSim(ebws):
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
     ebws.launch.shutdown()
     arg0 = ebws.current_benchmark_name
-    arg1 = "direction:=pull" if ebws.current_door_opening_side == "CW" else "direction:=push"
-    arg2 = "robot_placement_cw:=true" if ebws.current_robot_approach_side == "CW" else "robot_placement_cw:=false"
+    arg1 = 'direction:=pull' if ebws.current_door_opening_side == "CW" else 'direction:=push'
+    arg2 = 'robot_placement_cw:=true' if ebws.current_robot_approach_side == "CW" else 'robot_placement_cw:=false'
     
     package = 'eurobench_reemc_door'
     launch_file = 'reemc_door.launch'
