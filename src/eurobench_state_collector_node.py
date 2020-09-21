@@ -391,7 +391,7 @@ def restartSim(ebws):
     uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
     roslaunch.configure_logging(uuid)
     launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-    sys.argv = [arg0, arg2, arg1, arg3]
+    sys.argv = [arg2, arg1, arg3]
     ebws.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
     ebws.launch.start()
 
