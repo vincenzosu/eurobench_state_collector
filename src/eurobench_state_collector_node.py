@@ -380,7 +380,7 @@ def restartSim(ebws):
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
     ebws.launch.shutdown()
     print ebws.current_benchmark_name
-    arg0, arg1 = getScene(ebws.current_benchmark_name)
+    #arg0, arg1 = getScene(ebws.current_benchmark_name)
     
     
     arg2 = 'direction:=pull' if ebws.current_door_opening_side == "CW" else 'direction:=push'
