@@ -380,7 +380,7 @@ def restartSim(ebws):
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
     ebws.launch.shutdown()
     print ebws.current_benchmark_name
-    #arg0, arg1 = getScene(ebws.current_benchmark_name)
+    arg0, arg1 = getScene(ebws.current_benchmark_name)
     
     
     arg2 = 'direction:=pull' if ebws.current_door_opening_side == "CW" else 'direction:=push'
@@ -391,7 +391,7 @@ def restartSim(ebws):
     uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
     roslaunch.configure_logging(uuid)
     launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-    sys.argv = [arg2, arg1, arg3]
+    sys.argv = [arg0, arg2, arg1, arg3]
     ebws.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
     ebws.launch.start()
 
