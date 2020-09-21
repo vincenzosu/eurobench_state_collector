@@ -373,9 +373,9 @@ def getScene(benchmark_name):
         "Sudden Ramp": sudden_ramp,
         "Wind Ramp": wind_ramp,
     }
-    func = scene_map.get(benchmark_name)
+    func1, func2 = scene_map.get(benchmark_name)
 #    print func()
-    return func
+    return func1, func2
     
 def restartSim(ebws):
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
