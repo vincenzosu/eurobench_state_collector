@@ -360,7 +360,7 @@ def sudden_force():
     return 'door:=hard_obstacle','self_closing:=n'
  
 def sudden_ramp():
-    return '',''
+    return '',''  #TODO ADD
  
 def wind_ramp():
     return 'door:=wind','self_closing:=n'
@@ -374,7 +374,7 @@ def getScene(benchmark_name):
         "Wind Ramp": wind_ramp,
     }
     func = scene_map.get(benchmark_name)
-    func1, func2 = func()
+    arg1, arg2 = func()
     return func1, func2
     
 def restartSim(ebws):
