@@ -348,22 +348,50 @@ def benchmarkConfigurationHasChanged(ebws):
             
         return True;
     return False;
+        
+def noforce():
+    return 'door:=simple','self_closing:=n'
+ 
+def constant_force():
+#    return 'door:=simple','self_closing:=y'
+    return 'door:=soft_obstacle','self_closing:=n'
+ 
+def sudden_force():
+    return 'door:=hard_obstacle','self_closing:=n'
+ 
+def sudden_ramp():
+    return ''
+ 
+def wind_ramp():
+    return 'door:=wind','self_closing:=n'
          
+def getScene(benchmark_name):
+    scene_map = {
+        "No Force": noforce,
+        "Constant Force": constant_force,
+        "Sudden Force": sudden_force,
+        "Sudden Ramp": sudden_ramp,
+        "Wind Ramp": wind_ramp,
+    }
+    func = scene_map.get(benchmark_name)
+#    print func()
     
 def restartSim(ebws):
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
     ebws.launch.shutdown()
-    arg0 = ebws.current_benchmark_name
-    arg1 = 'direction:=pull' if ebws.current_door_opening_side == "CW" else 'direction:=push'
-    arg2 = 'robot_placement_cw:=true' if ebws.current_robot_approach_side == "CW" else 'robot_placement_cw:=false'
+    print ebws.current_benchmark_name
+    arg0, arg1 = getScene(ebws.current_benchmark_name)
+    
+    
+    arg2 = 'direction:=pull' if ebws.current_door_opening_side == "CW" else 'direction:=push'
+    arg3 = 'robot_placement_cw:=true' if ebws.current_robot_approach_side == "CW" else 'robot_placement_cw:=false'
     
     package = 'eurobench_reemc_door'
     launch_file = 'reemc_door.launch'
     uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
     roslaunch.configure_logging(uuid)
-#roslaunch.core.Node(package, launch_file, args='door:=simple direction:=pull gzpose:="-x 1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 0"')                 
     launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-    sys.argv = ['door:=simple', arg2, arg1]
+    sys.argv = [arg0, arg2, arg1, arg3]
     ebws.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
     ebws.launch.start()
 
