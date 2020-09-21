@@ -375,6 +375,7 @@ def getScene(benchmark_name):
     }
     func = scene_map.get(benchmark_name)
 #    print func()
+    return func
     
 def restartSim(ebws):
     print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
