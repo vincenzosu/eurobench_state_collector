@@ -360,7 +360,7 @@ def sudden_force():
     return 'door:=hard_obstacle','self_closing:=n'
  
 def sudden_ramp():
-    return ''
+    return '',''
  
 def wind_ramp():
     return 'door:=wind','self_closing:=n'
