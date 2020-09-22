@@ -317,8 +317,11 @@ def getHandlePosition():
         print "ServiceProxy failed: %s"%e
         exit(0)
     joint_prop_handle = get_door_joint_props('joint_door_lever')
-    if VERBOSE: print('---------- handle position ---------')
-    if VERBOSE: print(joint_prop_handle.position[0])
+    if VERBOSE: 
+        print('---------- handle position ---------')
+    if VERBOSE: 
+        print(joint_prop_handle.position[0])
+        
     return joint_prop_handle.position[0]
 
 
@@ -377,7 +380,8 @@ def getScene(benchmark_name):
     return func1, func2
     
 def restartSim(ebws):
-    print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
+    if VERBOSE: 
+        print("***** RESTARTING SIMULATION FOR PARAMETERS CHANGE *****")
     ebws.launch.shutdown()
     print ebws.current_benchmark_name
     arg0, arg1 = getScene(ebws.current_benchmark_name)
