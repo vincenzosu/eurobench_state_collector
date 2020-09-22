@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+	#!/usr/bin/env python
 
 import rospy
 import roslaunch
@@ -353,14 +353,13 @@ def noforce():
     return 'door:=simple','self_closing:=n'
  
 def constant_force():
-#    return 'door:=simple','self_closing:=y'
-    return 'door:=soft_obstacle','self_closing:=n'
+    return 'door:=simple','self_closing:=y'
  
 def sudden_force():
     return 'door:=hard_obstacle','self_closing:=n'
  
 def sudden_ramp():
-    return '',''  #TODO ADD
+    return 'door:=soft_obstacle','self_closing:=n'
  
 def wind_ramp():
     return 'door:=wind','self_closing:=n'
