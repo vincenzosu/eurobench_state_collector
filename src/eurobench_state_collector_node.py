@@ -273,17 +273,6 @@ def listener(self):
 #    rospy.init_node('eurobench_worldstate_provider', anonymous=True)
     image_camera = rospy.Subscriber("sensor_msgs/Image", Image, callback)
     
-  #  self.distance_sens0 = rospy.Subscriber("/sensor/base_ir_front_0", Float64,
-  #        									   self.ds_callback, queue_size=1)
-          
-  #  self.distance_sens1 = rospy.Subscriber("/sensor/base_ir_front_1", Float64,
-  #        									   self.ds_callback, queue_size=1)
-    
-    print('---------- sensors reading ---------')
-
-      # spin() simply keeps python from exiting until this node is stopped
-#    rospy.spin()
-#    print ("listener 4")
 
 def getDoorAperture(): 
     try:
@@ -377,7 +366,7 @@ def getScene(benchmark_name):
     }
     func = scene_map.get(benchmark_name)
     arg1, arg2 = func()
-    return func1, func2
+    return arg1, arg2
     
 def restartSim(ebws):
     if VERBOSE: 
