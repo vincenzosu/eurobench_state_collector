@@ -134,8 +134,6 @@ class eurobench_state_collector:
           #compute_forward_kinematics()
 
     def startSim(self):
-        
-        #door:=simple direction:=pull gzpose:="-x -1.0 -y 0.4 -z 0.86 -R 0.0 -P 0.0 -Y 3.1416"
         package = 'eurobench_reemc_door'
         launch_file = 'reemc_door.launch'
         
@@ -143,30 +141,11 @@ class eurobench_state_collector:
         roslaunch.configure_logging(uuid)
         
         launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-        sys.argv = [ 'door:=wind', 'direction:=push', 'robot_placement_cw:=false']
+        sys.argv = [ 'door:=simple', 'direction:=push', 'robot_placement_cw:=true']
         
         self.launch = roslaunch.parent.ROSLaunchParent(uuid, [launch_file])
         self.launch.start()
-        # https://answers.ros.org/question/42849/how-to-launch-a-launch-file-from-python-code/
-        # http://wiki.ros.org/roslaunch/API%20Usage
-        # https://answers.ros.org/question/237109/passing-arguments-to-launch-file-from-python-api/
-        # https://answers.ros.org/question/10493/programmatic-way-to-stop-roslaunch/
-        
-        '''
-        package = 'eurobench_reemc_door'
-        launch_file = 'reemc_door.launch'
-        
-        launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
-        
-        print launch_file
-        cli_args = [launch_file,'door:=simple']
-        roslaunch_args = cli_args[1:]
-        uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
-        roslaunch_file = [(roslaunch.rlutil.resolve_launch_arguments(cli_args)[0], roslaunch_args)]
-        parent = roslaunch.parent.ROSLaunchParent(uuid, roslaunch_file)
-        parent.start()
-        '''
-        
+
         
 
     def are_ranges_complete(self, ranges):
